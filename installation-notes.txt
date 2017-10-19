@@ -1,0 +1,17 @@
+# Cory notes on Anaconda installations
+
+# https://www.anaconda.com/download/#macos
+# https://docs.anaconda.com/anaconda/install/verify-install
+conda list
+
+# http://www.cvxpy.org/en/latest/install/
+conda install -c cvxgrp cvxpy libgcc
+
+conda install nose
+nosetests cvxpy
+
+conda install numpy
+
+# https://anaconda.org/conda-forge/python-igraph
+conda install -c conda-forge python-igraph
+

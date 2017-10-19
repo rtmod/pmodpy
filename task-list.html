@@ -1,0 +1,22 @@
+<h2 id="issues-and-tasks-for-implementations-of-the-p-modulus-on-graphs">Issues and tasks for implementations of the <span class="math inline"><em>p</em></span>-modulus on graphs</h2>
+<p>Convert these notes to HTML using Pandoc:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">pandoc</span> cory-notes.md -o cory-notes.html</code></pre></div>
+<h3 id="python-implementation">Python implementation</h3>
+<p>Functionality:</p>
+<ul>
+<li>Implement special case <span class="math inline"><em>p</em> = ∞</span> using <a href="http://www.cvxpy.org/en/latest/tutorial/functions/pnorm.html">the <code>'inf'</code> option in <code>cvxpy.pnorm</code></a></li>
+<li>Figure out why the functions terminate with <code>eps = 0</code> (but only about <code>10e-10</code> precision)</li>
+<li>Validate on larger and denser graphs (e.g. Medicare)</li>
+</ul>
+<p>Extensions:</p>
+<ul>
+<li>Weighted graphs</li>
+<li>Other families of edges (e.g. <a href="http://igraph.org/python/doc/igraph.Graph-class.html">minimal spanning trees</a>)</li>
+</ul>
+<h3 id="r-implementation">R implementation</h3>
+<p>First get convex optimization working in R.</p>
+<p>R packages for convex optimization:</p>
+<ul>
+<li><a href="http://faculty.bscb.cornell.edu/~bien/cvxfromr.html">CVXfromR</a></li>
+<li><a href="https://github.com/anqif/cvxr">cvxr</a></li>
+</ul>
