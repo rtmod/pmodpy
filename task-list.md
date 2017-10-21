@@ -14,7 +14,7 @@ Functionality:
 
 Issues:
 
-* Construct a minimal reproducible example of the `cvxpy` bug that produces negative `dens` entries
+* Construct a minimal reproducible example of the `cvxpy` bug that produces negative `dens` entries (Done by Luis, he thinks)
 
 Extensions:
 
