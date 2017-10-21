@@ -67,6 +67,8 @@ def modulus_walks(p, graph, source, target, eps = 2e-36, verbose = 0):
 	# Note: This is the p-norm,
 	# not the sum of p^th powers as in the original papers
 	obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
+    	if numpy.any(dens < 0):
+		dens = numpy.maximum(dens, numpy.zeros(dens.shape))
 	z = shortest(None, graph, source, target)
 	dens = numpy.zeros(graph.ecount())
 	constraint_list = [x >= 0, 1 <= z * x]
