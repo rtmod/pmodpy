@@ -35,3 +35,8 @@ Contacts.add_edges([
 #To use, in your console running the main script, incude
 #from ExampleGraphs import House
 #Now there is a graph House stored, and you can call the main(None,House,p,s,t,eps)
+
+import igraph.remote
+import igraph.remote.nexus
+# UNABLE TO EXECUTE VARIANTS ON THIS STEP
+karate = igraph.remote.nexus.get("karate")
