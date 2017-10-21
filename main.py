@@ -1,7 +1,4 @@
-import igraph
-import numpy
-import cvxpy
-
+import igraph, numpy, cvxpy
 #Given a graph g, the function shortest returns a matrix
 #counting the edge ids of edges visited in a shortest path from s to t
 def shortest(dens,g,s,t): 
