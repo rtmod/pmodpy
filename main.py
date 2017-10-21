@@ -84,6 +84,10 @@ def modulus_walks(p, graph, source, target, eps = 2e-36, verbose = 0):
 		# A previous line of code produced errors:
 		# "x = Variable(graph.ecount())"
 		dens = x.value
+		# Possible bug in cvxpy allows negative 'dens' entries;
+		# here we overwrite them
+		if numpy.any(dens < 0):
+			dens = numpy.maximum(dens, numpy.zeros(dens.shape))
 		z = shortest(dens, graph, source, target)
 		constraint_list.append(1 <= z * x)
 	# 
