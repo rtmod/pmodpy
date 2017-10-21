@@ -26,7 +26,7 @@ def shortest(dens,g,s,t):
 #t is the output node
 #eps is the theoretical error given in Modulus of Families of Walks on Graphs
      
-def main(dens,g,p,s,t,eps,verbose=0):
+def main(dens,g,p,s,t,eps=2e-36,verbose=0):
     #For high values of p there is an  raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
 #Creates a cvxpy variable type of length |Edge set of G|
     number_of_edges=g.ecount()
