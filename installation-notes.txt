@@ -5,10 +5,12 @@
 conda list
 
 # http://www.cvxpy.org/en/latest/install/
-conda install -c numpy scipy cvxgrp cvxpy libgcc
+conda install -c cvxgrp cvxpy libgcc
 
 conda install nose
 nosetests cvxpy
+
+conda install numpy
 
 # https://anaconda.org/conda-forge/python-igraph
 conda install -c conda-forge python-igraph
