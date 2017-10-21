@@ -29,7 +29,9 @@ def main(dens,g,p,s,t,eps,verbose=0):
     #  raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
 #Creates a cvxpy variable type of length |Edge set of G|
     number_of_edges=g.ecount()
+    
     x= cvxpy.Variable(number_of_edges)
+    
 #The is the objective function to be minimized 
     obj = cvxpy.Minimize(cvxpy.power(cvxpy.pnorm(x,p),p))
     z=shortest(None,g,s,t)
