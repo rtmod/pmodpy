@@ -14,10 +14,8 @@ def shortest(dens,g,s,t):
         z[i]+=1;
     return numpy.asmatrix(z)
 
-        
 
-        
-    
+
 #Given a graph G, if you have an approximate density
 #substitute it for dens
 #Otherwise type None
@@ -25,9 +23,10 @@ def shortest(dens,g,s,t):
 #s is the input node
 #t is the output node
 #eps is the theoretical error given in Modulus of Families of Walks on Graphs
-     
-def main(dens,g,p,s,t,eps=2e-36,verbose=0):
-    #For high values of p there is an  raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
+
+def main(dens,g,p,s,t,eps,verbose=0):
+    #For high values of p there is an error:
+    #  raise ZeroDivisionError('Fraction(%s, 0)' % numerator)
 #Creates a cvxpy variable type of length |Edge set of G|
     number_of_edges=g.ecount()
     x= cvxpy.Variable(number_of_edges)
@@ -44,9 +43,7 @@ def main(dens,g,p,s,t,eps=2e-36,verbose=0):
         dens=x.value
         z=shortest(dens,g,s,t)
         list_of_constraints.append(1 <= z*x)
-        
     Edge_List=g.get_edgelist()
-
     Density=numpy.asarray(dens)
     if verbose==0:
         return([y,Density])
@@ -65,19 +62,21 @@ def modulus_walks(p, graph, source, target, eps = 2e-36, verbose = 0):
 	# Creates a |E(G)|-by-1 cvxpy matrix variable type
 	edge_count = graph.ecount()
 	x = cvxpy.Variable(edge_count)
+	# Note: This is the p-norm,
+	# not the sum of p^th powers as in the original papers
 	obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
 	z = shortest(None, graph, source, target)
 	dens = numpy.zeros(graph.ecount())
 	constraint_list = [x >= 0, 1 <= z * x]
 	# Define the appropriate stopping criterion
-	if p == 'inf':
-		def stop_criterion(internal_z, internal_dens):
-			numpy.dot(internal_z, internal_dens) >= 1
-	else:
-		def stop_criterion(internal_z, internal_dens):
-			(numpy.dot(internal_z, internal_dens)) ** p >= 1 - eps
+	#if p == 'inf':
+	#	def stop_criterion(internal_z, internal_dens):
+	#		numpy.dot(internal_z, internal_dens) >= 1
+	#else:
+	#	def stop_criterion(internal_z, internal_dens):
+	#		(numpy.dot(internal_z, internal_dens)) ** p >= 1 - eps
 	# 
-	while (not(stop_criterion(z, dens))):
+	while (numpy.dot(z, dens) ** p < 1 - eps):
 		prob = cvxpy.Problem(obj, constraint_list)
 		y = prob.solve()
 		# A previous line of code produced errors:
