@@ -118,6 +118,9 @@ def modulus_walks_inf(graph, source, target, eps = 2e-36, verbose = 0):
 	z = shortest(None, graph, source, target)
 	dens = numpy.zeros(graph.ecount())
 	constraint_list = [x >= 0, 1 <= z * x]
+	# Note: A relationship between the tolerance 'eps' and the accuracy of 'y'
+	# has not been proved in the published literature.
+	# TEST THE RELATIONSHIP BETWEEN 'eps' AND THE ACCURACY OF 'y'
 	while (numpy.dot(z, dens) < 1 - eps):
 		prob = cvxpy.Problem(obj, constraint_list)
 		y = prob.solve()
