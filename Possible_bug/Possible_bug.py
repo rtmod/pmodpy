@@ -1,8 +1,6 @@
-import pickle,cvxpy,numpy
+import cvxpy,numpy
 
-pickle_in = open("Matrix_of_Constraints","rb")
-
-CONSTRAINTS = pickle.load(pickle_in)
+CONSTRAINTS = numpy.load("matrix_of_const.npy")
 x= cvxpy.Variable(26)
 list_of_constraints=[x>=0]
 
