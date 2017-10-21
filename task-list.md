@@ -9,14 +9,21 @@ pandoc cory-notes.md -o cory-notes.html
 
 Functionality:
 
-* Implement special case $p=\infty$ using [the `'inf'` option in `cvxpy.pnorm`](http://www.cvxpy.org/en/latest/tutorial/functions/pnorm.html)
-* Figure out why the functions terminate with `eps = 0` (but only about `10e-10` precision)
-* Validate on larger and denser graphs (e.g. Medicare)
+* Characterize the step function from `eps` to accuracy
+* Test case $p=\infty$ for relationship between tolerance `eps` and accuracy of `y`
+
+Issues:
+
+* Construct a minimal reproducible example of the `cvxpy` bug that produces negative `dens` entries
 
 Extensions:
 
 * Weighted graphs
+* Figure out how to get more examples through `igraph.remote.nexus`
+* Get a signal transduction network example
+* Implement graph-reading functions to facilitate use of new examples
 * Other families of edges (e.g. [minimal spanning trees](http://igraph.org/python/doc/igraph.Graph-class.html))
+* Validate on larger and denser graphs (e.g. Medicare)
 
 ### R implementation
 

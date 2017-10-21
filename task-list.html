@@ -4,14 +4,21 @@
 <h3 id="python-implementation">Python implementation</h3>
 <p>Functionality:</p>
 <ul>
-<li>Implement special case <span class="math inline"><em>p</em> = ∞</span> using <a href="http://www.cvxpy.org/en/latest/tutorial/functions/pnorm.html">the <code>'inf'</code> option in <code>cvxpy.pnorm</code></a></li>
-<li>Figure out why the functions terminate with <code>eps = 0</code> (but only about <code>10e-10</code> precision)</li>
-<li>Validate on larger and denser graphs (e.g. Medicare)</li>
+<li>Characterize the step function from <code>eps</code> to accuracy</li>
+<li>Test case <span class="math inline"><em>p</em> = ∞</span> for relationship between tolerance <code>eps</code> and accuracy of <code>y</code></li>
+</ul>
+<p>Issues:</p>
+<ul>
+<li>Construct a minimal reproducible example of the <code>cvxpy</code> bug that produces negative <code>dens</code> entries</li>
 </ul>
 <p>Extensions:</p>
 <ul>
 <li>Weighted graphs</li>
+<li>Figure out how to get more examples through <code>igraph.remote.nexus</code></li>
+<li>Get a signal transduction network example</li>
+<li>Implement graph-reading functions to facilitate use of new examples</li>
 <li>Other families of edges (e.g. <a href="http://igraph.org/python/doc/igraph.Graph-class.html">minimal spanning trees</a>)</li>
+<li>Validate on larger and denser graphs (e.g. Medicare)</li>
 </ul>
 <h3 id="r-implementation">R implementation</h3>
 <p>First get convex optimization working in R.</p>
