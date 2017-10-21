@@ -31,6 +31,8 @@ main(None, Contacts, "inf", 0, 1, 10e-12)
 main(None, Contacts, "inf", 1, 3, 10e-12)
 main(None, Contacts, "inf", 3, 20, 10e-12)
 
+modulus_walks(2, Contacts, 3, 20, eps = 10e-12)
+
 # read in a comorbidity graph
 medicare3 = igraph.Graph.Read_Ncol("../data/medicare1993-3.txt", directed = False)
 main(None, medicare3, 1, 0, 1, 10e-12)

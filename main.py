@@ -94,10 +94,10 @@ def modulus_walks(p, graph, source, target, eps = 2e-36, verbose = 0):
 		print("Edge", "Density")
 		for i in range(edge_count):
 			print(Edge_List[i], Density[i])
-		print(p, "-modulus is approximately", y)
+		print(p, "-modulus is approximately", y ** p)
 		print("Theoretical error = ", eps)
 	# 
-	return([y, Density])
+	return([y ** p, Density])
 
 def modulus_walks_inf(graph, source, target, eps = 2e-36, verbose = 0):
 	# Warning: For high values of 'p' the following error may obtain:
