@@ -20,8 +20,10 @@ Extensions:
 
 * Weighted graphs
 * Figure out how to get more examples through `igraph.remote.nexus`
+  (remote nexus is not working, the link simply does not work)
 * Get a signal transduction network example
 * Implement graph-reading functions to facilitate use of new examples
+  (done for edge table)
 * Other families of edges (e.g. [minimal spanning trees](http://igraph.org/python/doc/igraph.Graph-class.html))
 * Validate on larger and denser graphs (e.g. Medicare)
 
