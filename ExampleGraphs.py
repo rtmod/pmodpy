@@ -32,6 +32,14 @@ Contacts.add_edges([
 	(9,20),(14,20),(19,20)
 	])
 
+#This reads an table of edges and creates a directed graph. If you want undirected,
+#choose directed False
+#Note that the vertices are still labeled by numbers
+#To get which label corresponds to which vertex, use vs = igraph.VertexSeq(Dummy_Social_Network)
+#for i in vs:
+#    print(i)
+Dummy_Social_Network = igraph.Graph.Read_Ncol('dummy_sample_social_network.txt', directed=True)
+
 #To use, in your console running the main script, incude
 #from ExampleGraphs import House
 #Now there is a graph House stored, and you can call the main(None,House,p,s,t,eps)
@@ -39,4 +47,4 @@ Contacts.add_edges([
 import igraph.remote
 import igraph.remote.nexus
 # UNABLE TO EXECUTE VARIANTS ON THIS STEP
-karate = igraph.remote.nexus.get("karate")
+#karate = igraph.remote.nexus.get("karate")
