@@ -13,6 +13,7 @@ Notice that the indexing on vertices is shifted by -1.
 """
 import igraph
 
+
 Kite=igraph.Graph()
 Kite.add_vertices(4)
 Kite.add_edges([(0,2),(0,3),(1,3),(2,3)])
@@ -38,7 +39,9 @@ Contacts.add_edges([
 #To get which label corresponds to which vertex, use vs = igraph.VertexSeq(Dummy_Social_Network)
 #for i in vs:
 #    print(i)
-Dummy_Social_Network = igraph.Graph.Read_Ncol('dummy_sample_social_network.txt', directed=True)
+
+#igraph.read("smallgraph.edgelist", format="ncol", directed=False, names=True)
+dummy_weighted=igraph.Graph.Read_Ncol("Graphs/dummy_weighted_2", directed = False)
 
 #To use, in your console running the main script, incude
 #from ExampleGraphs import House
