@@ -1,4 +1,0 @@
-"Cory" "Luis"
-"Luis" "Anna"
-"Anna" "Kathy"
-"Anna" "Pedro"
