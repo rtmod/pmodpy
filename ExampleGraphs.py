@@ -33,10 +33,21 @@ Contacts.add_edges([
 	(9,20),(14,20),(19,20)
 	])
 
+Routers=igraph.Graph()
+Routers.add_vertices(15)
+Routers.add_edges([
+	(0,1),(0,2),(0,3),
+	(1,4),(1,7),(2,8),(2,6),(3,6),(3,7),
+	(4,8),(5,9),(5,13),(5,10),(6,10),(7,10),(7,11),
+	(8,12),(9,12),(9,13),(10,13),(11,13),
+	(12,14),(13,14)
+	])
+
 #This reads an table of edges and creates a directed graph. If you want undirected,
 #choose directed False
 #Note that the vertices are still labeled by numbers
-#To get which label corresponds to which vertex, use vs = igraph.VertexSeq(Dummy_Social_Network)
+#To get which label corresponds to which vertex,
+#use vs = igraph.VertexSeq(Dummy_Social_Network)
 #for i in vs:
 #    print(i)
 
