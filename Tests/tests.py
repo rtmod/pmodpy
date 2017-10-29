@@ -1,6 +1,8 @@
 execfile("main.py")
 execfile("ExampleGraphs.py")
 
+# walks
+
 # Validate toy example
 # https://arxiv.org/abs/1401.7640
 # p. 4
@@ -37,3 +39,20 @@ modulus_walks(2, Contacts, 3, 20, eps = 10e-12)
 medicare3 = igraph.Graph.Read_Ncol("../data/medicare1993-3.txt", directed = False)
 main(None, medicare3, 1, 0, 1, 10e-12)
 main(None, medicare3, 2, 0, 1, 10e-12)
+
+# spanning trees
+
+# toy example
+# https://arxiv.org/abs/1401.7640
+modulus_trees(1, Kite, 10e-12)
+modulus_trees(2, Kite, 10e-12)
+
+# house example
+# https://arxiv.org/abs/1401.7640
+modulus_trees(1, House, 10e-12)
+modulus_trees(2, House, 10e-12)
+
+# illustrative contacts example
+# http://www.ams.org/journals/ecgd/2015-19-13/S1088-4173-2015-00287-8/
+modulus_trees(1, Contacts, 10e-12)
+modulus_trees(2, Contacts, 10e-12)

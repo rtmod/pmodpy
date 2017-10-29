@@ -1,4 +1,5 @@
 import igraph, numpy, cvxpy
+
 #Given a graph g, the function shortest returns a matrix
 #counting the edge ids of edges visited in a shortest path from s to t
 def shortest(dens,g,s,t): 
@@ -11,7 +12,16 @@ def shortest(dens,g,s,t):
         z[i]+=1;
     return numpy.asmatrix(z)
 
-
+#Given a graph g,
+#return a matrix counting the edge IDs of a minimal spanning tree
+def spantree(dens, g):
+	# Get a minimal spanning tree 'st'
+	st = g.spanning_tree(weights = dens, return_tree = False)
+	# Return an edge vector of indicators for membership in 'st'
+	z = numpy.zeros(g.ecount())
+	for i in st:
+		z[i] += 1
+	return numpy.asmatrix(z)
 
 #Given a graph G, if you have an approximate density
 #substitute it for dens
@@ -142,4 +152,40 @@ def modulus_walks_inf(graph, source, target, eps = 2e-36, verbose = 0):
 		print("Theoretical error = ", eps)
 	# 
 	return([y, Density])
+
+def modulus_trees(p, graph, eps = 2e-36, verbose = 0):
+	# Creates a |E(G)|-by-1 cvxpy matrix variable type
+	edge_count = graph.ecount()
+	x = cvxpy.Variable(edge_count)
+	# Note: This is the p-norm,
+	# not the sum of p^th powers as in the original papers
+	obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
+	z = spantree(None, graph)
+	dens = numpy.zeros(graph.ecount())
+	constraint_list = [x >= 0, 1 <= z * x]
+	# 
+	while (numpy.dot(z, dens) ** p < 1 - eps):
+		prob = cvxpy.Problem(obj, constraint_list)
+		y = prob.solve()
+		# A previous line of code produced errors:
+		# "x = Variable(graph.ecount())"
+		dens = x.value
+		# Possible bug in cvxpy allows negative 'dens' entries;
+		# here we overwrite them
+		if numpy.any(dens < 0):
+			dens = numpy.maximum(dens, numpy.zeros(dens.shape))
+		z = spantree(dens, graph)
+		constraint_list.append(1 <= z * x)
+	# 
+	Edge_List = graph.get_edgelist()
+	Density = numpy.asarray(dens)
+	# 
+	if verbose != 0:
+		print("Edge", "Density")
+		for i in range(edge_count):
+			print(Edge_List[i], Density[i])
+		print(p, "-modulus is approximately", y ** p)
+		print("Theoretical error = ", eps)
+	# 
+	return([y ** p, Density])
 
