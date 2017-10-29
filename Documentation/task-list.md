@@ -10,11 +10,13 @@ pandoc cory-notes.md -o cory-notes.html
 Functionality:
 
 * Characterize the step function from `eps` to accuracy
-* Test case $p=\infty$ for relationship between tolerance `eps` and accuracy of `y`
+* Test case $p=\infty$ for relationship between tolerance `eps` and
+accuracy of `y`
+* Implement MFR algorithm.
+* Implement Probabilistic interpretation of Modulus.
+
 
 Issues:
-
-* Construct a minimal reproducible example of the `cvxpy` bug that produces negative `dens` entries (Done by Luis, he thinks)
 
 Extensions:
 
