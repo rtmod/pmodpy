@@ -54,11 +54,23 @@ Routers.add_edges([
 #igraph.read("smallgraph.edgelist", format="ncol", directed=False, names=True)
 dummy_weighted=igraph.Graph.Read_Ncol("Graphs/dummy_weighted_2", directed = False)
 
+#Example for MFR expansion
+#open graphexpansion.py
+#graph = Graph([(0,1), (0,2), (2,3), (3,4), (4,2), (2,5), (5,0), (6,3), (5,6)],directed=True)
+#graph.es["syngroup"]=[0,1,0,1,1,0,0,0,0]
+#expand_graph(graph,True)
+
+
+
+
+
+
+
 #To use, in your console running the main script, incude
 #from ExampleGraphs import House
 #Now there is a graph House stored, and you can call the main(None,House,p,s,t,eps)
 
-import igraph.remote
-import igraph.remote.nexus
+#import igraph.remote
+#import igraph.remote.nexus
 # UNABLE TO EXECUTE VARIANTS ON THIS STEP
 #karate = igraph.remote.nexus.get("karate")
