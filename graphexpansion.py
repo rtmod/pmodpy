@@ -12,13 +12,23 @@ def expand_graph(graph):
             break
         else:
             target=x[0].target
-            comp=graph.add_vertex(name="c"+str(i))
+            graph=graph.add_vertex(name="c"+str(i))
+            comp=g.vs.select(name_eq="c"+str(i))
+#Look at this part.
             for j in x:
-                graph.add_edge(j.source,comp)
-            graph.delete_edges(x)
-            graph.add_edge(comp,target)
+                graph=graph.add_edge(j.source,comp)
+#Look at this part.
+
+            graph=graph.delete_edges(x)
+            graph=graph.add_edge(comp,target)
     return graph
-            
+#Look at this
+#Logical checks
+
+
+
+
+
             
     
             
