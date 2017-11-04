@@ -4,7 +4,8 @@
 
 from igraph import *
 
-def expand_graph(graph):
+def expand_graph(g):
+    graph=g.copy()
     for i in range(1,len(graph.es())+1):
         x=graph.es.select(syngroup_eq=i)
         
@@ -12,21 +13,42 @@ def expand_graph(graph):
             break
         else:
             target=x[0].target
-            graph=graph.add_vertex(name="c"+str(i))
-            comp=g.vs.select(name_eq="c"+str(i))
+            graph.add_vertex(label="c"+str(i))
+            comp=graph.vs.select(label_eq="c"+str(i))
+            
 #Look at this part.
             for j in x:
-                graph=graph.add_edge(j.source,comp)
+                graph.add_edge(j.source,comp[0])
 #Look at this part.
 
-            graph=graph.delete_edges(x)
-            graph=graph.add_edge(comp,target)
+            graph.delete_edges(x)
+            graph.add_edge(comp[0],target)
     return graph
-#Look at this
-#Logical checks
 
 
 
+
+
+
+from igraph import *
+
+def expand_graph(g):
+    graph=g.copy()
+    for i in range(1,len(graph.es())+1):
+        x=graph.es.select(syngroup_eq=i)
+        
+        if len(x)==0:
+            return "Did you forget the synergy list?"
+        else:
+            target=x[0].target
+            graph.add_vertex(label="c"+str(i))
+            comp=graph.vs.select(label_eq="c"+str(i))
+            for j in x:
+                graph.add_edge(j.source,comp[0])
+
+            graph.delete_edges(x)
+            graph.add_edge(comp[0],target)
+    return graph
 
 
             
