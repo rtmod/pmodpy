@@ -5,11 +5,11 @@ def get_minimum(graph, subfamily, dens = None):
 		dens = [float(1)] * graph.ecount()
 	min_wt = float("inf")
 	for mem in subfamily:
-		wt = sum([dens[x - 1] for x in mem])
+		wt = sum([dens[x] for x in mem])
 		if wt < min_wt:
 			min_wt = wt
 			min_mem = mem
-	z = [int(i + 1 in min_mem) for i in range(graph.ecount())]
+	z = [int(i in min_mem) for i in range(graph.ecount())]
 	return numpy.asmatrix(z)
 
 def modulus_subfamily(p, graph, subfamily, eps = 2e-36, verbose = 0):
