@@ -20,3 +20,9 @@ conda install -c conda-forge python-igraph
 # uninstall all this stuff
 conda remove python-igraph
 conda uninstall -c numpy scipy cvxgrp cvxpy libgcc
+
+
+
+# conda environment for Python 3
+# http://salishsea-meopar-docs.readthedocs.io/en/latest/work_env/python3_conda_environment.html
+# using environment name p3
