@@ -25,4 +25,4 @@ conda uninstall -c numpy scipy cvxgrp cvxpy libgcc
 
 # conda environment for Python 3
 # http://salishsea-meopar-docs.readthedocs.io/en/latest/work_env/python3_conda_environment.html
-# using environment name p3
+# using environment name py3
