@@ -28,7 +28,7 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
     # not the sum of p^th powers as in the original papers
     obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
     z = get_minimum(graph, subfamily)
-    dens = numpy.zeros(graph.ecount())
+    dens = numpy.zeros(edge_count)
     constraint_list = [x >= 0, 1 <= z * x]
     # Define the appropriate stopping criterion
     # if p == 'inf':
@@ -62,3 +62,26 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
         print("Theoretical error = ", eps)
     #
     return([y ** p, Density])
+
+
+# Albin & Poggi-Corradini (2016), Equation (2.9)
+# unweighted graphs
+def modulus_subfamily_dual(p, graph, subfamily, eps=2e-36, verbose=0):
+    link_count = graph.ecount()
+    object_count = len(subfamily)
+    Gamma = numpy.asmatrix(
+        [[int(i in g) for i in range(graph.ecount())] for g in subfamily]
+    )
+    x = cvxpy.Variable(object_count)
+    constraint_list = [x >= 0]
+    obj = cvxpy.Maximize(
+        cvxpy.sum_entries(x) - (p - 1) * cvxpy.sum_entries(
+            [cvxpy.power(cvxpy.sum_entries(
+                [x[i] * Gamma.item((i,e)) for i in range(numpy.shape(Gamma)[0])]
+            ) / p, p / (p - 1)) for e in range(numpy.shape(Gamma)[1])]
+        )
+    )
+    lam = numpy.zeros(object_count)
+    prob = cvxpy.Problem()
+    #
+    return([lam])

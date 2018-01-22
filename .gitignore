@@ -1,5 +1,8 @@
-# ignoring pycache
+# pycache
 __pycache__
+
+# bytecode
+*.pyc
 
 # Mac stuff
 .DS_Store
