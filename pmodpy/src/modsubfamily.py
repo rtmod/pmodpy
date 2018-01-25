@@ -67,21 +67,25 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
 # Albin & Poggi-Corradini (2016), Equation (2.9)
 # unweighted graphs
 def modulus_subfamily_dual(p, graph, subfamily, eps=2e-36, verbose=0):
-    link_count = graph.ecount()
-    object_count = len(subfamily)
-    Gamma = numpy.asmatrix(
+    # preliminary calculations
+    n_objects = len(subfamily)
+    usage = numpy.asmatrix(
         [[int(i in g) for i in range(graph.ecount())] for g in subfamily]
     )
-    x = cvxpy.Variable(object_count)
-    constraint_list = [x >= 0]
+    # CVX variables
+    lam = cvxpy.Variable(n_objects)
+    constraint_list = [lam >= 0]
+    # CVX optimization problem
     obj = cvxpy.Maximize(
-        cvxpy.sum_entries(x) - (p - 1) * cvxpy.sum_entries(
-            [cvxpy.power(cvxpy.sum_entries(
-                [x[i] * Gamma.item((i,e)) for i in range(numpy.shape(Gamma)[0])]
-            ) / p, p / (p - 1)) for e in range(numpy.shape(Gamma)[1])]
+        cvxpy.sum_entries(lam) - (p - 1) * cvxpy.sum_entries(
+            cvxpy.power(
+                numpy.transpose(usage) * lam / p,
+                p / (p - 1)
+            )
         )
     )
-    lam = numpy.zeros(object_count)
-    prob = cvxpy.Problem()
-    #
-    return([lam])
+    prob = cvxpy.Problem(obj, constraint_list)
+    # p-modulus and optimal probability mass function
+    g = prob.solve()
+    mu = lam.value / sum(lam.value)
+    return([g, mu])
