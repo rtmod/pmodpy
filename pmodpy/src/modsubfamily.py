@@ -66,7 +66,7 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
 
 # Albin & Poggi-Corradini (2016), Equation (2.9)
 # unweighted graphs
-def modulus_subfamily_dual(p, graph, subfamily, eps=2e-36, verbose=0):
+def modulus_subfamily_dual(p, graph, subfamily):
     # preliminary calculations
     n_objects = len(subfamily)
     usage = numpy.asmatrix(
@@ -89,3 +89,57 @@ def modulus_subfamily_dual(p, graph, subfamily, eps=2e-36, verbose=0):
     g = prob.solve()
     mu = lam.value / sum(lam.value)
     return([g, mu])
+
+def modulus_subfamily_full(p, graph, subfamily, eps=2e-36, verbose=0):
+    # preliminary calculations
+    edge_count = graph.ecount()
+    dens = numpy.zeros(edge_count)
+    # CVX variables
+    x = cvxpy.Variable(edge_count)
+    constraint_list = [x >= 0]
+    # CVX optimization problem
+    obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
+    # find minimum configuration for uniform density
+    z = get_minimum(graph, subfamily)
+    constraint_list.append(1 <= z * x)
+    ## let Gamma be an array of only z
+    while (numpy.dot(z, dens) ** p < 1 - eps):
+        # iteration of optimization process
+        prob = cvxpy.Problem(obj, constraint_list)
+        y = prob.solve()
+        dens = x.value
+        # overwrite negative values
+        if numpy.any(dens < 0):
+            dens = numpy.maximum(dens, numpy.zeros(dens.shape))
+        z = get_minimum(graph, subfamily, dens)
+        constraint_list.append(1 <= z * x)
+        ## append z to Gamma
+    # 
+    # ...
+    mod1 = y ** p
+    ## below, replace subfamily with Gamma
+    # 
+    # preliminary calculations
+    n_objects = len(subfamily)
+    usage = numpy.asmatrix(
+        [[int(i in g) for i in range(graph.ecount())] for g in subfamily]
+    )
+    # CVX variables
+    lam = cvxpy.Variable(n_objects)
+    constraint_list = [lam >= 0]
+    # CVX optimization problem
+    obj = cvxpy.Maximize(
+        cvxpy.sum_entries(lam) - (p - 1) * cvxpy.sum_entries(
+            cvxpy.power(
+                numpy.transpose(usage) * lam / p,
+                p / (p - 1)
+            )
+        )
+    )
+    prob = cvxpy.Problem(obj, constraint_list)
+    # modulus and optimal probability mass function
+    mod2 = prob.solve()
+    mu = lam.value / sum(lam.value)
+    # 
+    ## check that mod1 == mod2
+    return([mod1, numpy.asarray(dens), mu])
