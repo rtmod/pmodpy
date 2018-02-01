@@ -90,7 +90,7 @@ def modulus_subfamily_dual(p, graph, subfamily):
     mu = lam.value / sum(lam.value)
     return([g, mu])
 
-def modulus_subfamily_full(p, graph, subfamily, eps=2e-36, verbose=0):
+def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
     # preliminary calculations
     edge_count = graph.ecount()
     dens = numpy.zeros(edge_count)
@@ -101,8 +101,9 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-36, verbose=0):
     obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
     # find minimum configuration for uniform density
     z = get_minimum(graph, subfamily)
+    Gamma = z
     constraint_list.append(1 <= z * x)
-    ## let Gamma be an array of only z
+    # iteratively append lengths of members of Gamma to constraints
     while (numpy.dot(z, dens) ** p < 1 - eps):
         # iteration of optimization process
         prob = cvxpy.Problem(obj, constraint_list)
@@ -112,18 +113,15 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-36, verbose=0):
         if numpy.any(dens < 0):
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
         z = get_minimum(graph, subfamily, dens)
+        Gamma = numpy.r_[Gamma, z]
         constraint_list.append(1 <= z * x)
-        ## append z to Gamma
-    # 
-    # ...
+    #
+    # modulus and extremal density
     mod1 = y ** p
-    ## below, replace subfamily with Gamma
-    # 
+    rho = numpy.asarray(dens)
+    #
     # preliminary calculations
-    n_objects = len(subfamily)
-    usage = numpy.asmatrix(
-        [[int(i in g) for i in range(graph.ecount())] for g in subfamily]
-    )
+    n_objects = Gamma.shape[0]
     # CVX variables
     lam = cvxpy.Variable(n_objects)
     constraint_list = [lam >= 0]
@@ -131,7 +129,7 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-36, verbose=0):
     obj = cvxpy.Maximize(
         cvxpy.sum_entries(lam) - (p - 1) * cvxpy.sum_entries(
             cvxpy.power(
-                numpy.transpose(usage) * lam / p,
+                numpy.transpose(Gamma) * lam / p,
                 p / (p - 1)
             )
         )
@@ -139,7 +137,7 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-36, verbose=0):
     prob = cvxpy.Problem(obj, constraint_list)
     # modulus and optimal probability mass function
     mod2 = prob.solve()
-    mu = lam.value / sum(lam.value)
-    # 
+    mu = numpy.asarray(lam.value / sum(lam.value))
+    #
     ## check that mod1 == mod2
-    return([mod1, numpy.asarray(dens), mu])
+    return([mod1, mod2, rho, mu])
