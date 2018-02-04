@@ -139,5 +139,4 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
     mod2 = prob.solve()
     mu = numpy.asarray(lam.value / sum(lam.value))
     #
-    ## check that mod1 == mod2
     return([mod1, mod2, rho, mu])
