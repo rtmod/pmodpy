@@ -1,10 +1,5 @@
 ## Issues and tasks for implementations of the $p$-modulus on graphs
 
-Convert these notes to HTML using Pandoc:
-```sh
-pandoc cory-notes.md -o cory-notes.html
-```
-
 ### Python implementation
 
 Functionality:
@@ -12,9 +7,9 @@ Functionality:
 * Characterize the step function from `eps` to accuracy
 * Test case $p=\infty$ for relationship between tolerance `eps` and
 accuracy of `y`
-* Implement MFR algorithm.
-* Implement Probabilistic interpretation of Modulus.
-
+* Implement MFR algorithm. (Abandoned)
+* Implement Probabilistic interpretation of Modulus. (Done)
+- Replace walk- and tree-specific implementations with a general implementation that takes a minimum-object generator as an argument.
 
 Issues:
 
@@ -26,7 +21,7 @@ Extensions:
 * Get a signal transduction network example
 * Implement graph-reading functions to facilitate use of new examples
 (Done 10/24/2017)
-* Other families of edges (e.g. [minimal spanning trees](http://igraph.org/python/doc/igraph.Graph-class.html))
+* Other families of links (e.g. [minimal spanning trees](http://igraph.org/python/doc/igraph.Graph-class.html))
 * Validate on larger and denser graphs (e.g. Medicare)
 
 ### R implementation
