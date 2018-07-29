@@ -1,4 +1,4 @@
-
+.py
 # Given a graph g, the function shortest returns a matrix
 # counting the edge ids of edges visited in a shortest path from s to t
 
@@ -32,10 +32,19 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
     # "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
     # Creates a |E(G)|-by-1 cvxpy matrix variable typ
     edge_count = graph.ecount()
+
+
+    weight_vector=graph.es["weight"];
+
+    
+    scaled_weight_vector=numpy.power(weight_vector,1/p)
+    
     x = cvxpy.Variable(edge_count)
+
+
     # Note: This is the p-norm,
     # not the sum of p^th powers as in the original papers
-    obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
+    obj = cvxpy.Minimize(cvxpy.pnorm(numpy.dot(scaled_weight_vector,x), p))
     z = shortest(None, graph, source, target)
     dens = numpy.zeros(graph.ecount())
     constraint_list = [x >= 0, 1 <= z * x]
