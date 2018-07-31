@@ -1,4 +1,4 @@
-.py
+
 # Given a graph g, the function shortest returns a matrix
 # counting the edge ids of edges visited in a shortest path from s to t
 
@@ -33,9 +33,11 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
     # Creates a |E(G)|-by-1 cvxpy matrix variable typ
     edge_count = graph.ecount()
 
-
-    weight_vector=graph.es["weight"];
-
+    if graph.is_weighted():
+        weight_vector=graph.es["weight"];
+    else:
+        weight_vector=numpy.ones(graph.ecount());
+        
     
     scaled_weight_vector=numpy.power(weight_vector,1/p)
     
@@ -44,7 +46,7 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
 
     # Note: This is the p-norm,
     # not the sum of p^th powers as in the original papers
-    obj = cvxpy.Minimize(cvxpy.pnorm(numpy.dot(scaled_weight_vector,x), p))
+    obj = cvxpy.Minimize(cvxpy.pnorm(scaled_weight_vector*x, p))
     z = shortest(None, graph, source, target)
     dens = numpy.zeros(graph.ecount())
     constraint_list = [x >= 0, 1 <= z * x]
@@ -68,7 +70,11 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
         z = shortest(dens, graph, source, target)
         constraint_list.append(1 <= z * x)
     Edge_List = graph.get_edgelist()
+
+    ##Notice that right now, we are getting a scaled density vector since we are multiplying \rho_i by w_i^(1/p) where w_i is the ith coordinate of the weight vector. It makes no difference if the graph is unweighted.
+    
     Density = numpy.asarray(dens)
+    Density =Density/scaled_weight_vector;
     if verbose != 0:
         print("Edge", "Density")
         for i in range(edge_count):
