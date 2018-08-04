@@ -51,17 +51,35 @@ def Routers():
 
 def Shakeri_1c():
     Shakeri_1c=igraph.Graph();
+    Shakeri_1c=Shakeri_1c.as_directed()
     Shakeri_1c.add_vertices(9);
     Shakeri_1c.add_edges([(0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)]);
     Shakeri_1c.es["weight"]=1.0;
     Shakeri_1c[3, 6] = 2;
     return Shakeri_1c
 
+def Shakeri_1b():
+    Shakeri_1b=igraph.Graph();
+    Shakeri_1b=Shakeri_1b.as_directed()
+    Shakeri_1b.add_vertices(9);
+    Shakeri_1b.add_edges([(0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)]);
+    return Shakeri_1b
+
 def Shakeri_1a():
-    Shakeri_1c=igraph.Graph();
-    Shakeri_1c.add_vertices(9);
-    Shakeri_1c.add_edges([(0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)]);
-    return Shakeri_1c
+    Shakeri_1a=igraph.Graph();
+    Shakeri_1a=Shakeri_1a.as_directed()
+    Shakeri_1a.add_vertices(9);
+    Shakeri_1a.add_edges([(0,1),(1,2),(2,5),(3,1),(6,3),(8,6),(1,4),(4,7),(7,8),(5,8)]);
+    return Shakeri_1a
+
+def Shakeri_1d():
+    Shakeri_1d=igraph.Graph();
+    Shakeri_1d=Shakeri_1d.as_directed()
+    Shakeri_1d.add_vertices(9);
+    Shakeri_1d.add_edges([(0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8),(3,2),(6,5),(3,4),(6,7)]);
+    return Shakeri_1d
+
+
     
 
 

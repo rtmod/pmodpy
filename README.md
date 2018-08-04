@@ -35,6 +35,12 @@ Then, one of the examples can be called as follow:
 House=examplegraphs.House()
 ```
 
+``` python
+##This graph is giving a different modulus as reported from the Shakeri paper.
+Shakeri_1d =examplegraphs.Shakeri_1d()
+```
+
+
 where House is the name of one of the example graphs.
 
 If you want to compute the 2-modulus of walks from node 0 to node 1 on

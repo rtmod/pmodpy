@@ -10,7 +10,7 @@ import cvxpy
 def shortest(dens, g, s, t):
     # Uses http://igraph.org/python/ get_shortest_paths.
     # See website for details.
-    x = g.get_shortest_paths(s, t, dens, "OUT", "epath")
+    x = g.get_shortest_paths(s, to=t, weights=dens, mode="OUT", output="epath")
 # Creates a vector of length |Edge Set of g| of all zeros
     z = numpy.zeros(g.ecount())
 # For loop is simply to create a counter for each edge visited.
@@ -47,12 +47,12 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
 
     # Note: This is the p-norm,
     # not the sum of p^th powers as in the original papers
-    obj = cvxpy.Minimize(cvxpy.pnorm(scaled_weight_vector*x, p))
+    obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
     z = shortest(None, graph, source, target)
     dens = numpy.zeros(graph.ecount())
     constraint_list = [x >= 0, 1 <= z * x]
     # Define the appropriate stopping criterion
-    # if p == 'inf':
+    # if p == 'inf':x
     # def stop_criterion(internal_z, internal_dens):
     # numpy.dot(internal_z, internal_dens) >= 1
     # else:
@@ -75,12 +75,11 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
     ##Notice that right now, we are getting a scaled density vector since we are multiplying \rho_i by w_i^(1/p) where w_i is the ith coordinate of the weight vector. It makes no difference if the graph is unweighted.
     
     Density = numpy.asarray(dens)
-    Density =Density/scaled_weight_vector;
     if verbose != 0:
         print("Edge", "Density")
         for i in range(edge_count):
             print(Edge_List[i], Density[i])
-        print(p, "-modulus is approximately", y ** p)
+        print(p,"modulus is approximately", y ** p)
         print("Theoretical error = ", eps)
     return([y ** p, Density])
 
@@ -119,6 +118,6 @@ def modulus_walks_inf(graph, source, target, eps=2e-36, verbose=0):
         print("Edge", "Density")
         for i in range(edge_count):
             print(Edge_List[i], Density[i])
-    print(p, "-modulus is approximately", y)
+    print(p,"modulus is approximately", y)
     print("Theoretical error = ", eps)
     return([y, Density])
