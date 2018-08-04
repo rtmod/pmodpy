@@ -47,6 +47,23 @@ def Routers():
         (8, 12), (9, 12), (9, 13), (10, 13), (11, 13),
         (12, 14), (13, 14)
     ])
+    return Routes
+
+def Shakeri_1c():
+    Shakeri_1c=igraph.Graph();
+    Shakeri_1c.add_vertices(9);
+    Shakeri_1c.add_edges([(0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)]);
+    Shakeri_1c.es["weight"]=1.0;
+    Shakeri_1c[3, 6] = 2;
+    return Shakeri_1c
+
+def Shakeri_1a():
+    Shakeri_1c=igraph.Graph();
+    Shakeri_1c.add_vertices(9);
+    Shakeri_1c.add_edges([(0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)]);
+    return Shakeri_1c
+    
+
 
 # This reads an table of edges and creates a directed graph. If you want undirected,
 # choose directed False

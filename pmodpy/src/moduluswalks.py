@@ -35,6 +35,7 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
 
     if graph.is_weighted():
         weight_vector=graph.es["weight"];
+        print("weighted")
     else:
         weight_vector=numpy.ones(graph.ecount());
         

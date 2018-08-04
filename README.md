@@ -40,7 +40,7 @@ where House is the name of one of the example graphs.
 If you want to compute the 2-modulus of walks from node 0 to node 1 on
 House graph with verbose option, then we do:
 ```python
-*moduluswalks.modulus_walks(2, House, 0, 1, eps=2e-36, verbose=0)
+moduluswalks.modulus_walks(2, House, 0, 1, eps=2e-36, verbose=0)
 ```
 
 ## Acknowledgments
