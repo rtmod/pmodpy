@@ -1,6 +1,6 @@
 # pycache
 __pycache__
-
+*_cache
 # bytecode
 *.pyc
 
@@ -15,3 +15,8 @@ __pycache__
 # TeX
 
 *.tex
+
+
+#Ignore emacs saves
+*~
+

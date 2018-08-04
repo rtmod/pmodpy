@@ -81,7 +81,7 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
             print(Edge_List[i], Density[i])
         print(p,"modulus is approximately", y ** p)
         print("Theoretical error = ", eps)
-    return([y ** p, Density])
+    return([y ** p, Density,Edge_List])
 
 
 def modulus_walks_inf(graph, source, target, eps=2e-36, verbose=0):
