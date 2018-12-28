@@ -70,14 +70,14 @@ def modulus_subfamily_dual(p, graph, subfamily):
     # preliminary calculations
     n_objects = len(subfamily)
     usage = numpy.asmatrix(
-        [[int(i in g) for i in range(graph.ecount())] for g in subfamily]
+        [[int(i in j) for i in range(graph.ecount())] for j in subfamily]
     )
     # CVX variables
     lam = cvxpy.Variable(n_objects)
     constraint_list = [lam >= 0]
     # CVX optimization problem
     obj = cvxpy.Maximize(
-        cvxpy.sum_entries(lam) - (p - 1) * cvxpy.sum_entries(
+        cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
             cvxpy.power(
                 numpy.transpose(usage) * lam / p,
                 p / (p - 1)
@@ -127,7 +127,7 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
     constraint_list = [lam >= 0]
     # CVX optimization problem
     obj = cvxpy.Maximize(
-        cvxpy.sum_entries(lam) - (p - 1) * cvxpy.sum_entries(
+        cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
             cvxpy.power(
                 numpy.transpose(Gamma) * lam / p,
                 p / (p - 1)
