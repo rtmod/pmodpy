@@ -14,7 +14,7 @@ def get_minimum(graph, subfamily, dens=None):
             min_wt = wt
             min_mem = mem
     z = [int(i in min_mem) for i in range(graph.ecount())]
-    return numpy.asmatrix(z)
+    return numpy.asarray(z)
 
 
 def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
@@ -91,6 +91,7 @@ def modulus_subfamily_dual(p, graph, subfamily):
     return([g, mu])
 
 def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
+    '''rho is the extremal density, mu is the optimal probability mass function.'''
     # preliminary calculations
     edge_count = graph.ecount()
     dens = numpy.zeros(edge_count)
@@ -138,5 +139,8 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
     # modulus and optimal probability mass function
     mod2 = prob.solve()
     mu = numpy.asarray(lam.value / sum(lam.value))
-    #
+    diff=abs(mod1-mod2)
+    if diff > 2e-8:
+        print("Warning: The modulus computed via different methods differ by more than 2e-8")
+    
     return([mod1, mod2, rho, mu])

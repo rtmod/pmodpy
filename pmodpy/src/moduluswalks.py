@@ -16,7 +16,7 @@ def shortest(dens, g, s, t):
 # For loop is simply to create a counter for each edge visited.
     for i in x:
         z[i] += 1
-    return numpy.asmatrix(z)
+    return numpy.asarray(z)
 
 
 # Given a graph G, if you have an approximate density
