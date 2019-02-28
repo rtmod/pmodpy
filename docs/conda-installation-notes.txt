@@ -24,12 +24,13 @@ conda uninstall -c numpy scipy cvxgrp cvxpy libgcc
 
 
 # conda environment for Python 3
+# https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#removing-an-environment
 # http://salishsea-meopar-docs.readthedocs.io/en/latest/work_env/python3_conda_environment.html
 # using environment name py3
 
-conda create -n mypython3 python=3
+conda create -n py3 python=3
 
-source activate mypython3
+source activate py3
 
 conda install anaconda
 
