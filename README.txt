@@ -16,7 +16,7 @@ See the file `installation-notes.txt` for more detail.
 
 ## Organization
 
-It is structured as a python package.
+It is structured as a python module
 
 The main functions can be called as follows:
 ```python
@@ -48,6 +48,8 @@ House graph with verbose option, then we do:
 ```python
 moduluswalks.modulus_walks(2, House, 0, 1, eps=2e-36, verbose=0)
 ```
+##Testing uses py.test
+
 
 ## Acknowledgments
 

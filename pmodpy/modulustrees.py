@@ -10,7 +10,7 @@ def spantree(dens, g):
     z = numpy.zeros(g.ecount())
     for i in st:
         z[i] += 1
-    return numpy.asmatrix(z)
+    return numpy.asarray(z)
 
 
 def modulus_trees(p, graph, eps=2e-36, verbose=0):
