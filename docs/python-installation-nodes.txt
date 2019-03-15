@@ -39,3 +39,19 @@ conda install netcdf4
 # then install the previous packages
 
 source deactivate
+
+
+
+
+# 2019-02-28
+# without Anaconda
+
+# manuall install Python 2.7.16
+pip install numpy
+pip install cvxpy
+pip install python-igraph
+
+brew install python3
+brew link python3
+pip3 install numpy
+pip3 install cvxpy
