@@ -50,8 +50,16 @@ source deactivate
 pip install numpy
 pip install cvxpy
 pip install python-igraph
+# from directory outside `pmodpy`:
+pip install pmodpy/
+# from Bitbucket:
+pip3 install git+ssh://git@https://bitbucket.org/pmodulus/pmodpy.git
 
 brew install python3
 brew link python3
 pip3 install numpy
 pip3 install cvxpy
+# from directory outside `pmodpy`
+pip3 install pmodpy/
+# from Bitbucket:
+pip3 install git+ssh://git@https://bitbucket.org/pmodulus/pmodpy.git
