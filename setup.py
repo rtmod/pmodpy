@@ -13,7 +13,7 @@ setup(
     long_description=open('README.txt').read(),
     packages=setuptools.find_packages(),
     install_requires=[
-        "igraph",
+        "python-igraph",
         "cvxpy",
         "numpy",
     ],

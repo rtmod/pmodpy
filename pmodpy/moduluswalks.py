@@ -1,46 +1,63 @@
 
-# Given a graph g, the function shortest returns a matrix
-# counting the edge ids of edges visited in a shortest path from s to t
-
 import igraph
 import numpy
 import cvxpy
 
 
-def shortest(dens, g, s, t):
-    # Uses http://igraph.org/python/ get_shortest_paths.
-    # See website for details.
-    x = g.get_shortest_paths(s, to=t, weights=dens, mode="OUT", output="epath")
-# Creates a vector of length |Edge Set of g| of all zeros
-    z = numpy.zeros(g.ecount())
-# For loop is simply to create a counter for each edge visited.
+def shortest(graph, source, target,dens=None):
+    """ 
+    Given a graph g, the function shortest returns a numpyt array
+    counting the edge ids of edges visited in a shortest path from s to t.
+
+    Uses http://igraph.org/python/ get_shortest_paths.
+
+    Key Variables
+    graph --igraph object.
+    s -- Source node.
+    t-- Target node.
+    dens -- Weights of edges as an edge list. NOT IMPLEMENTED YET. (default=None) 
+
+    """
+    x = graph.get_shortest_paths(source, to=target, weights=dens, mode="OUT", output="epath")
+## Creates a vector of length |Edge Set of g| of all zeros
+    z = numpy.zeros(graph.ecount())
+## For loop is simply to create a counter for each edge visited.
     for i in x:
         z[i] += 1
     return numpy.asarray(z)
 
 
-# Given a graph G, if you have an approximate density
-# substitute it for dens
-# Otherwise type None
-# p is for the computation of p-modulus
-# s is the input node
-# t is the output node
-# eps is the theoretical error given in Modulus of Families of Walks on Graphs
 
-def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
-    # Warning: For high values of 'p' the following error may obtain:
-    # "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
+def modulus_walks( graph, source, target, eps=2e-36, verbose=0,p=2):
+    """
+    Computes the modulus of the family of walks from  source node to target node.
+
+    Key variables:
+    p -- Value of p-modulus for the p-modulus function. Default = 2.
+    graph -- igraph object
+    source -- source node id
+    target -- Target node id
+    eps -- theoretical error given in Modulus of Families of Walks on Graphs (default= 2e-36)
+    verbose -- How much information to print to console. Default =0 (False)
+    
+
+    Note: Weighted graphs are not supported yet.
+
+    Warning: For high values of 'p' the following error may obtain:
+
+    "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
+
+    """
     # Creates a |E(G)|-by-1 cvxpy matrix variable typ
     edge_count = graph.ecount()
 
-    if graph.is_weighted():
-        weight_vector=graph.es["weight"];
-        print("weighted")
-    else:
-        weight_vector=numpy.ones(graph.ecount());
+    #if graph.is_weighted():
+        #weight_vector=graph.es["weight"];
+    #else:
+        #weight_vector=numpy.ones(graph.ecount());
         
     
-    scaled_weight_vector=numpy.power(weight_vector,1/p)
+    #scaled_weight_vector=numpy.power(weight_vector,1/p)
     
     x = cvxpy.Variable(edge_count)
 
@@ -48,7 +65,8 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
     # Note: This is the p-norm,
     # not the sum of p^th powers as in the original papers
     obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
-    z = shortest(None, graph, source, target)
+    #Later, dens can be substituted with an approximate density, or a weight.
+    z = shortest(dens=None, graph=graph, source=source, target=target)
     dens = numpy.zeros(graph.ecount())
     constraint_list = [x >= 0, 1 <= z * x]
     # Define the appropriate stopping criterion
@@ -68,7 +86,7 @@ def modulus_walks(p, graph, source, target, eps=2e-36, verbose=0):
         # here we overwrite them
         if numpy.any(dens < 0):
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
-        z = shortest(dens, graph, source, target)
+        z = shortest(dens=dens, graph=graph, source=source, target=target)
         constraint_list.append(1 <= z * x)
     Edge_List = graph.get_edgelist()
 

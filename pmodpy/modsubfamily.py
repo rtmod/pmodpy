@@ -1,7 +1,8 @@
+""" Implementation for the modulus function for a general family of objects.   """
 
-import igraph
-import numpy
-import cvxpy
+import igraph 
+import numpy 
+import cvxpy 
 
 
 def get_minimum(graph, subfamily, dens=None):
@@ -18,6 +19,9 @@ def get_minimum(graph, subfamily, dens=None):
 
 
 def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
+    """ Modulus subfamily 
+
+    """
     # Warning: For high values of 'p' the following error may obtain:
     # "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
     #

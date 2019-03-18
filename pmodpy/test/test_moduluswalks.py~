@@ -1,9 +1,0 @@
-### Testing file for function modulus walks
-from context import pmodpy
-from pmodpy.src import moduluswalks
-from pmodpy.examplegraphs import examplegraphs
-
-
-def test_walks_house():
-    kite=examplegraphs.Kite();
-    assert abs(moduluswalks.modulus_walks(2, kite, 0, 1, eps=2e-36, verbose=0)-0.6)<.00001;
