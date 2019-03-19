@@ -28,7 +28,7 @@ def shortest(graph, source, target,dens=None):
 
 
 
-def modulus_walks( graph, source, target, eps=2e-36, verbose=0,p=2):
+def modulus_walks( graph, source, target,p=2, eps=2e-36, verbose=False,solver=cvxpy.CVXOPT):
     """
     Computes the modulus of the family of walks from  source node to target node.
 
@@ -37,9 +37,9 @@ def modulus_walks( graph, source, target, eps=2e-36, verbose=0,p=2):
     graph -- igraph object
     source -- source node id
     target -- Target node id
-    eps -- theoretical error given in Modulus of Families of Walks on Graphs (default= 2e-36)
-    verbose -- How much information to print to console. Default =0 (False)
-    
+    eps -- theoretical error given in Modulus of Families of Walks on GraphsY (default= 2e-36)
+    verbose -- How much information to print to console. Default =False
+    solver-- Which solver to use for CVXOPT
 
     Note: Weighted graphs are not supported yet.
 
@@ -78,7 +78,7 @@ def modulus_walks( graph, source, target, eps=2e-36, verbose=0,p=2):
     # (numpy.dot(internal_z, internal_dens)) ** p >= 1 - eps
     while (numpy.dot(z, dens) ** p < 1 - eps):
         prob = cvxpy.Problem(obj, constraint_list)
-        y = prob.solve()
+        y = prob.solve(solver,verbose)
         # A previous line of code produced errors:
         # "x = Variable(graph.ecount())"
         dens = x.value
@@ -93,7 +93,7 @@ def modulus_walks( graph, source, target, eps=2e-36, verbose=0,p=2):
     ##Notice that right now, we are getting a scaled density vector since we are multiplying \rho_i by w_i^(1/p) where w_i is the ith coordinate of the weight vector. It makes no difference if the graph is unweighted.
     
     Density = numpy.asarray(dens)
-    if verbose != 0:
+    if verbose:
         print("Edge", "Density")
         for i in range(edge_count):
             print(Edge_List[i], Density[i])

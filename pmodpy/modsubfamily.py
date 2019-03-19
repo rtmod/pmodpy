@@ -18,7 +18,7 @@ def get_minimum(graph, subfamily, dens=None):
     return numpy.asarray(z)
 
 
-def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
+def modulus_subfamily(graph, subfamily,p=2, eps=2e-36, verbose=False,solver=cvxpy.CVXOPT):
     """ Modulus subfamily 
 
     """
@@ -44,7 +44,7 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
     #
     while (numpy.dot(z, dens) ** p < 1 - eps):
         prob = cvxpy.Problem(obj, constraint_list)
-        y = prob.solve()
+        y = prob.solve(solver,verbose)
         # A previous line of code produced errors:
         # "x = Variable(graph.ecount())"
         dens = x.value
@@ -58,7 +58,7 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
     Edge_List = graph.get_edgelist()
     Density = numpy.asarray(dens)
     #
-    if verbose != 0:
+    if verbose:
         print("Edge", "Density")
         for i in range(edge_count):
             print(Edge_List[i], Density[i])
@@ -70,7 +70,7 @@ def modulus_subfamily(p, graph, subfamily, eps=2e-36, verbose=0):
 
 # Albin & Poggi-Corradini (2016), Equation (2.9)
 # unweighted graphs
-def modulus_subfamily_dual(p, graph, subfamily):
+def modulus_subfamily_dual(p, graph, subfamily,solver=cvxpy.CVXOPT):
     # preliminary calculations
     n_objects = len(subfamily)
     usage = numpy.asmatrix(
@@ -94,7 +94,7 @@ def modulus_subfamily_dual(p, graph, subfamily):
     mu = lam.value / sum(lam.value)
     return([g, mu])
 
-def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
+def modulus_subfamily_full(p, graph, subfamily, eps=2e-24,verbose=False,solver=cvxpy.CVXOPT):
     '''rho is the extremal density, mu is the optimal probability mass function.'''
     # preliminary calculations
     edge_count = graph.ecount()
@@ -141,7 +141,7 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-24):
     )
     prob = cvxpy.Problem(obj, constraint_list)
     # modulus and optimal probability mass function
-    mod2 = prob.solve()
+    mod2 = prob.solve(verbose,solver)
     mu = numpy.asarray(lam.value / sum(lam.value))
     diff=abs(mod1-mod2)
     if diff > 2e-8:

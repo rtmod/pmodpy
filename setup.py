@@ -4,7 +4,7 @@ from distutils.core import setup
 setup(
     name='pmodpy',
     version='0.1.0',
-    author='L. Sordo Vieira',
+    author='Luis Sordo Vieira and Cory Brunson',
     author_email='l.sordovieira@gmail.com',
     scripts=[],
     url='',

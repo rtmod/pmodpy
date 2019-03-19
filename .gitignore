@@ -18,6 +18,8 @@ __pycache__
 
 
 #Ignore emacs saves
+*~
+
 
 # Compiled python modules.
 *.pyc
