@@ -18,7 +18,7 @@ def get_minimum(graph, subfamily, dens=None):
     return numpy.asarray(z)
 
 
-def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, verbose=False, solver=cvxpy.CVXOPT):
+def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
     """ Modulus subfamily
 
     """
@@ -68,7 +68,7 @@ def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, verbose=False, s
     return([y ** p, Density])
 
 
-# Albin & Poggi-Corradini (2016), Equation (2.9)
+# @Albin2016a, Equation 2.9
 # unweighted graphs
 def modulus_subfamily_mass(graph, subfamily, p=2, solver=cvxpy.CVXOPT):
     # preliminary calculations
@@ -94,7 +94,7 @@ def modulus_subfamily_mass(graph, subfamily, p=2, solver=cvxpy.CVXOPT):
     mu = lam.value / sum(lam.value)
     return([g, mu])
 
-def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, verbose=False, solver=cvxpy.CVXOPT):
+def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, solver=cvxpy.CVXOPT, verbose=False):
     '''rho is the extremal density, mu is the optimal probability mass function.'''
     # preliminary calculations
     edge_count = graph.ecount()
@@ -141,9 +141,9 @@ def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, verbose=False, solv
     )
     prob = cvxpy.Problem(obj, constraint_list)
     # modulus and optimal probability mass function
-    mod2 = prob.solve(verbose,solver)
+    mod2 = prob.solve(verbose, solver)
     mu = numpy.asarray(lam.value / sum(lam.value))
-    diff=abs(mod1-mod2)
+    diff = abs(mod1-mod2)
     if diff > 2e-8:
         print("Warning: The modulus computed via different methods differ by more than 2e-8")
 

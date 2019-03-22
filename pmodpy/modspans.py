@@ -13,7 +13,7 @@ def spantree(dens, g):
     return numpy.asarray(z)
 
 
-def modulus_spans_density(graph, p=2, eps=2e-36, verbose=0):
+def modulus_spans_density(graph, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
     if p == "inf":
         modulus_trees_inf(graph, eps=2e-36, verbose=0)
     else:
@@ -28,7 +28,7 @@ def modulus_spans_density(graph, p=2, eps=2e-36, verbose=0):
         constraint_list = [x >= 0, 1 <= z * x]
         while (numpy.dot(z, dens) ** p < 1 - eps):
             prob = cvxpy.Problem(obj, constraint_list)
-            y = prob.solve()
+            y = prob.solve(solver, verbose)
             dens = x.value
             # cvxpy allows negative 'dens' entries;
             # here we overwrite them
@@ -48,7 +48,7 @@ def modulus_spans_density(graph, p=2, eps=2e-36, verbose=0):
         return([y ** p, Density])
 
 
-def modulus_spans_density_inf(graph, eps=2e-36, verbose=0):
+def modulus_spans_density_inf(graph, eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
     # Creates a |E(G)|-by-1 cvxpy matrix variable type
     edge_count = graph.ecount()
     x = cvxpy.Variable(edge_count)
@@ -63,7 +63,7 @@ def modulus_spans_density_inf(graph, eps=2e-36, verbose=0):
     # TEST THE RELATIONSHIP BETWEEN 'eps' AND THE ACCURACY OF 'y'
     while (numpy.dot(z, dens) < 1 - eps):
         prob = cvxpy.Problem(obj, constraint_list)
-        y = prob.solve()
+        y = prob.solve(solver, verbose)
         # A previous line of code produced errors:
         # "x = Variable(graph.ecount())"
         dens = x.value
