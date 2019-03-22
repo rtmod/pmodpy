@@ -1,8 +1,8 @@
 """ Implementation for the modulus function for a general family of objects.   """
 
-import igraph 
-import numpy 
-import cvxpy 
+import igraph
+import numpy
+import cvxpy
 
 
 def get_minimum(graph, subfamily, dens=None):
@@ -18,8 +18,8 @@ def get_minimum(graph, subfamily, dens=None):
     return numpy.asarray(z)
 
 
-def modulus_subfamily(graph, subfamily,p=2, eps=2e-36, verbose=False,solver=cvxpy.CVXOPT):
-    """ Modulus subfamily 
+def modulus_subfamily_density(graph, subfamily,p=2, eps=2e-36, verbose=False,solver=cvxpy.CVXOPT):
+    """ Modulus subfamily
 
     """
     # Warning: For high values of 'p' the following error may obtain:
@@ -70,7 +70,7 @@ def modulus_subfamily(graph, subfamily,p=2, eps=2e-36, verbose=False,solver=cvxp
 
 # Albin & Poggi-Corradini (2016), Equation (2.9)
 # unweighted graphs
-def modulus_subfamily_dual(p, graph, subfamily,solver=cvxpy.CVXOPT):
+def modulus_subfamily_mass(p, graph, subfamily,solver=cvxpy.CVXOPT):
     # preliminary calculations
     n_objects = len(subfamily)
     usage = numpy.asmatrix(
@@ -146,5 +146,5 @@ def modulus_subfamily_full(p, graph, subfamily, eps=2e-24,verbose=False,solver=c
     diff=abs(mod1-mod2)
     if diff > 2e-8:
         print("Warning: The modulus computed via different methods differ by more than 2e-8")
-    
+
     return([mod1, mod2, rho, mu])

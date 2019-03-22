@@ -4,8 +4,8 @@ import numpy
 import cvxpy
 
 
-def shortest(graph, source, target,dens=None):
-    """ 
+def shortest(graph, source, target, dens=None):
+    """
     Given a graph g, the function shortest returns a numpyt array
     counting the edge ids of edges visited in a shortest path from s to t.
 
@@ -15,7 +15,7 @@ def shortest(graph, source, target,dens=None):
     graph --igraph object.
     s -- Source node.
     t-- Target node.
-    dens -- Weights of edges as an edge list. NOT IMPLEMENTED YET. (default=None) 
+    dens -- Weights of edges as an edge list. NOT IMPLEMENTED YET. (default=None)
 
     """
     x = graph.get_shortest_paths(source, to=target, weights=dens, mode="OUT", output="epath")
@@ -28,7 +28,7 @@ def shortest(graph, source, target,dens=None):
 
 
 
-def modulus_walks( graph, source, target,p=2, eps=2e-36, verbose=False,solver=cvxpy.CVXOPT):
+def modulus_walks_density(graph, source, target, p=2, eps=2e-36, verbose=False, solver=cvxpy.CVXOPT):
     """
     Computes the modulus of the family of walks from  source node to target node.
 
@@ -55,10 +55,10 @@ def modulus_walks( graph, source, target,p=2, eps=2e-36, verbose=False,solver=cv
         #weight_vector=graph.es["weight"];
     #else:
         #weight_vector=numpy.ones(graph.ecount());
-        
-    
+
+
     #scaled_weight_vector=numpy.power(weight_vector,1/p)
-    
+
     x = cvxpy.Variable(edge_count)
 
 
@@ -91,7 +91,7 @@ def modulus_walks( graph, source, target,p=2, eps=2e-36, verbose=False,solver=cv
     Edge_List = graph.get_edgelist()
 
     ##Notice that right now, we are getting a scaled density vector since we are multiplying \rho_i by w_i^(1/p) where w_i is the ith coordinate of the weight vector. It makes no difference if the graph is unweighted.
-    
+
     Density = numpy.asarray(dens)
     if verbose:
         print("Edge", "Density")
@@ -102,7 +102,7 @@ def modulus_walks( graph, source, target,p=2, eps=2e-36, verbose=False,solver=cv
     return([y ** p, Density,Edge_List])
 
 
-def modulus_walks_inf(graph, source, target, eps=2e-36, verbose=0):
+def modulus_walks_density_inf(graph, source, target, eps=2e-36, verbose=0):
     # Warning: For high values of 'p' the following error may obtain:
     # "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
     # Creates a |E(G)|-by-1 cvxpy matrix variable type

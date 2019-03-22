@@ -13,7 +13,7 @@ def spantree(dens, g):
     return numpy.asarray(z)
 
 
-def modulus_trees(p, graph, eps=2e-36, verbose=0):
+def modulus_spans_density(p, graph, eps=2e-36, verbose=0):
     if p == "inf":
         modulus_trees_inf(graph, eps=2e-36, verbose=0)
     else:
@@ -48,7 +48,7 @@ def modulus_trees(p, graph, eps=2e-36, verbose=0):
         return([y ** p, Density])
 
 
-def modulus_trees_inf(graph, eps=2e-36, verbose=0):
+def modulus_spans_density_inf(graph, eps=2e-36, verbose=0):
     # Creates a |E(G)|-by-1 cvxpy matrix variable type
     edge_count = graph.ecount()
     x = cvxpy.Variable(edge_count)
