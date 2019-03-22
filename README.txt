@@ -21,8 +21,8 @@ It is structured as a python module
 The main functions can be called as follows:
 ```python
 from pmodpy.src import modsubfamily
-from pmodpy.src import modulustrees
-from pmodpy.src import moduluswalks
+from pmodpy.src import modspans
+from pmodpy.src import modwalks
 ```
 
 If you would like to use the example graphs, include the following line:
@@ -46,7 +46,7 @@ where House is the name of one of the example graphs.
 If you want to compute the 2-modulus of walks from node 0 to node 1 on
 House graph with verbose option, then we do:
 ```python
-moduluswalks.modulus_walks(2, House, 0, 1, eps=2e-36, verbose=0)
+modwalks.modulus_walks_density(House, 0, 1, p=2, eps=2e-36, verbose=0)
 ```
 ##Testing uses py.test
 

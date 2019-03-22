@@ -18,7 +18,7 @@ def get_minimum(graph, subfamily, dens=None):
     return numpy.asarray(z)
 
 
-def modulus_subfamily_density(graph, subfamily,p=2, eps=2e-36, verbose=False,solver=cvxpy.CVXOPT):
+def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, verbose=False, solver=cvxpy.CVXOPT):
     """ Modulus subfamily
 
     """
@@ -70,7 +70,7 @@ def modulus_subfamily_density(graph, subfamily,p=2, eps=2e-36, verbose=False,sol
 
 # Albin & Poggi-Corradini (2016), Equation (2.9)
 # unweighted graphs
-def modulus_subfamily_mass(p, graph, subfamily,solver=cvxpy.CVXOPT):
+def modulus_subfamily_mass(graph, subfamily, p=2, solver=cvxpy.CVXOPT):
     # preliminary calculations
     n_objects = len(subfamily)
     usage = numpy.asmatrix(
@@ -94,7 +94,7 @@ def modulus_subfamily_mass(p, graph, subfamily,solver=cvxpy.CVXOPT):
     mu = lam.value / sum(lam.value)
     return([g, mu])
 
-def modulus_subfamily_full(p, graph, subfamily, eps=2e-24,verbose=False,solver=cvxpy.CVXOPT):
+def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, verbose=False, solver=cvxpy.CVXOPT):
     '''rho is the extremal density, mu is the optimal probability mass function.'''
     # preliminary calculations
     edge_count = graph.ecount()

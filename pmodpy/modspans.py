@@ -13,7 +13,7 @@ def spantree(dens, g):
     return numpy.asarray(z)
 
 
-def modulus_spans_density(p, graph, eps=2e-36, verbose=0):
+def modulus_spans_density(graph, p=2, eps=2e-36, verbose=0):
     if p == "inf":
         modulus_trees_inf(graph, eps=2e-36, verbose=0)
     else:
