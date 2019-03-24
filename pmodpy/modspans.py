@@ -41,10 +41,10 @@ def modulus_spans_density(graph, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=0)
     dens = numpy.zeros(edge_count)
     constraint_list = [x >= 0, 1 <= z * x]
     if p == 'inf':
-        pow = 1
+        exp = 1
     else:
-        pow = p
-    while (numpy.dot(z, dens) ** pow < 1 - eps):
+        exp = p
+    while (numpy.dot(z, dens) ** exp < 1 - eps):
         prob = cvxpy.Problem(obj, constraint_list)
         y = prob.solve(solver, verbose)
         dens = x.value
@@ -57,6 +57,6 @@ def modulus_spans_density(graph, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=0)
         print("Edge", "Density")
         for i in range(edge_count):
             print(edge_list[i], rho[i])
-            print(p, "-modulus is approximately ", y ** pow)
+            print(p, "-modulus is approximately ", y ** exp)
             print("Theoretical error = ", eps)
     return([y ** p, rho])
