@@ -28,7 +28,8 @@ def shortest(graph, source, target, dens=None):
 
 
 
-def modulus_walks_density(graph, source, target, p=2, eps=2e-36, verbose=False, solver=cvxpy.CVXOPT):
+def modulus_walks_density(graph, source, target, p=2,
+                              eps=2e-36, verbose=False, solver=cvxpy.CVXOPT):
     """
     Computes the modulus of the family of walks from  source node to target node.
 
@@ -102,7 +103,8 @@ def modulus_walks_density(graph, source, target, p=2, eps=2e-36, verbose=False, 
     return([y ** p, Density,Edge_List])
 
 
-def modulus_walks_density_inf(graph, source, target, eps=2e-36, verbose=0):
+def modulus_walks_density_inf(graph, source, target,
+                                  eps=2e-36, verbose=0):
     # Warning: For high values of 'p' the following error may obtain:
     # "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
     # Creates a |E(G)|-by-1 cvxpy matrix variable type
