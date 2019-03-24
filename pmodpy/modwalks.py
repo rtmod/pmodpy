@@ -34,7 +34,13 @@ def shortest(graph, source, target, dens=None):
     return numpy.asarray(z)
 
 
+<<<<<<< HEAD
 def modulus_walks_density(graph, source, target, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+=======
+
+def modulus_walks_density(graph, source, target, p=2,
+                              eps=2e-36, verbose=False, solver=cvxpy.CVXOPT):
+>>>>>>> bc4f436e431f1546f80861748918ee955d18a1b1
     """
     Compute the modulus of the family of walks in a graph
     from a source node to a target node.
@@ -117,11 +123,19 @@ def modulus_walks_density(graph, source, target, p=2, eps=2e-36, solver=cvxpy.CV
     return([y ** p, rho])
 
 
+<<<<<<< HEAD
 def modulus_walks_density_inf(graph, source, target, eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
     # Warning: For high values of `p` the following error may obtain:
     # `ZeroDivisionError('Fraction(%s, 0)' % numerator)`
 
     # Store the edge count and edge list
+=======
+def modulus_walks_density_inf(graph, source, target,
+                                  eps=2e-36, verbose=0):
+    # Warning: For high values of 'p' the following error may obtain:
+    # "ZeroDivisionError('Fraction(%s, 0)' % numerator)"
+    # Creates a |E(G)|-by-1 cvxpy matrix variable type
+>>>>>>> bc4f436e431f1546f80861748918ee955d18a1b1
     edge_count = graph.ecount()
     edge_list = graph.get_edgelist()
     # Create a |E(G)|-by-1 *cvxpy* matrix variable type
