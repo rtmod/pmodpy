@@ -40,7 +40,8 @@ def get_minimum(graph, subfamily, dens=None):
     return numpy.asarray(z)
 
 
-def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+def modulus_subfamily_density(graph, subfamily, p=2,
+                              eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
     """
     Compute the modulus of a family of objects of a graph.
 
@@ -105,7 +106,8 @@ def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, solver=cvxpy.CVX
 
 # @Albin2016a, Equation 2.9
 # unweighted graphs
-def modulus_subfamily_mass(graph, subfamily, p=2, solver=cvxpy.CVXOPT, verbose=False):
+def modulus_subfamily_mass(graph, subfamily, p=2,
+                           solver=cvxpy.CVXOPT, verbose=False):
     # preliminary calculations
     n_objects = len(subfamily)
     usage = numpy.asmatrix(
@@ -129,7 +131,8 @@ def modulus_subfamily_mass(graph, subfamily, p=2, solver=cvxpy.CVXOPT, verbose=F
     mu = lam.value / sum(lam.value)
     return([mod, mu])
 
-def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, solver=cvxpy.CVXOPT, verbose=False):
+def modulus_subfamily_full(graph, subfamily, p=2,
+                           eps=2e-24, solver=cvxpy.CVXOPT, verbose=False):
     # preliminary calculations
     edge_count = graph.ecount()
     dens = numpy.zeros(edge_count)
@@ -181,6 +184,6 @@ def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, solver=cvxpy.CVXOPT
     # concordance between modulus calculations
     diff = abs(mod1-mod2)
     if diff > 1e-7:
-        print("Warning: The modulus computed via different methods differ by more than 1e-7")
+        print("Warning: Moduli estimates differ by more than 1e-7")
     #
     return([mod1, mod2, rho, mu])

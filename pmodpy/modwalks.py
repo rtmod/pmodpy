@@ -24,7 +24,8 @@ def shortest(graph, source, target, dens=None):
 
     """
     # Find a shortest path
-    x = graph.get_shortest_paths(source, to=target, weights=dens, mode="OUT", output="epath")
+    x = graph.get_shortest_paths(source, to=target, weights=dens,
+                                 mode="OUT", output="epath")
     # Create a zero array of length |E(G)|
     z = numpy.zeros(graph.ecount())
     # Indicate each edge visited
@@ -34,7 +35,8 @@ def shortest(graph, source, target, dens=None):
     return numpy.asarray(z)
 
 
-def modulus_walks_density(graph, source, target, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+def modulus_walks_density(graph, source, target, p=2,
+                          eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
     """
     Compute the modulus of the family of walks in a graph
     from a source node to a target node.
@@ -117,7 +119,8 @@ def modulus_walks_density(graph, source, target, p=2, eps=2e-36, solver=cvxpy.CV
     return([y ** p, rho])
 
 
-def modulus_walks_density_inf(graph, source, target, eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
+def modulus_walks_density_inf(graph, source, target,
+                              eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
     # Warning: For high values of `p` the following error may obtain:
     # `ZeroDivisionError('Fraction(%s, 0)' % numerator)`
 
@@ -167,7 +170,8 @@ def modulus_walks_density_inf(graph, source, target, eps=2e-36, solver=cvxpy.CVX
     return([y, rho])
 
 
-def modulus_walks_full(graph, source, target, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+def modulus_walks_full(graph, source, target, p=2,
+                       eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
     """
     1. Computes the modulus and extremal density using @Albin2014 Algorithm 1,
         collecting a minimal subfamily in the process.
