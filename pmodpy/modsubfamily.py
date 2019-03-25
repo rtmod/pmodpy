@@ -40,7 +40,6 @@ def get_minimum(graph, subfamily, dens=None):
     return numpy.asarray(z)
 
 
-<<<<<<< HEAD
 def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
     """
     Compute the modulus of a family of objects of a graph.
@@ -57,11 +56,6 @@ def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36, solver=cvxpy.CVX
 
     Warning: For high values of `p` the following error may obtain:
     `ZeroDivisionError('Fraction(%s, 0)' % numerator)`
-=======
-def modulus_subfamily_density(graph, subfamily, p=2, eps=2e-36,
-                                  verbose=False, solver=cvxpy.CVXOPT):
-    """ Modulus subfamily
->>>>>>> bc4f436e431f1546f80861748918ee955d18a1b1
 
     """
     #
@@ -135,14 +129,7 @@ def modulus_subfamily_mass(graph, subfamily, p=2, solver=cvxpy.CVXOPT, verbose=F
     mu = lam.value / sum(lam.value)
     return([mod, mu])
 
-<<<<<<< HEAD
 def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, solver=cvxpy.CVXOPT, verbose=False):
-=======
-def modulus_subfamily_full(graph, subfamily, p=2, eps=2e-24, verbose=False,
-                               solver=cvxpy.CVXOPT):
-    '''rho is the extremal density, mu is the optimal probability mass 
-function.'''
->>>>>>> bc4f436e431f1546f80861748918ee955d18a1b1
     # preliminary calculations
     edge_count = graph.ecount()
     dens = numpy.zeros(edge_count)
