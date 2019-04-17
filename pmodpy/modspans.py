@@ -33,7 +33,7 @@ def spantree(graph, dens):
 
 
 def modulus_spans_density(graph, p=2,
-                          eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
+                          eps=1e-8, solver=cvxpy.CVXOPT, verbose=0):
     edge_count = graph.ecount()
     edge_list = graph.get_edgelist()
     x = cvxpy.Variable(edge_count)
@@ -64,7 +64,7 @@ def modulus_spans_density(graph, p=2,
 
 
 def modulus_spans_full(graph, p=2,
-                       eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+                       eps=1e-8, solver=cvxpy.CVXOPT, verbose=False):
     edge_count = graph.ecount()
     x = cvxpy.Variable(edge_count)
     obj = cvxpy.Minimize(cvxpy.pnorm(x, p))

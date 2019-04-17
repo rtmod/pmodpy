@@ -41,7 +41,7 @@ def get_minimum(graph, subfamily, dens=None):
 
 
 def modulus_subfamily_density(graph, subfamily, p=2,
-                              eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+                              eps=1e-8, solver=cvxpy.CVXOPT, verbose=False):
     """
     Compute the modulus of a family of objects of a graph.
 

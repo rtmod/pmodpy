@@ -36,7 +36,7 @@ def shortest(graph, source, target, dens=None):
 
 
 def modulus_walks_density(graph, source, target, p=2,
-                          eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+                          eps=1e-8, solver=cvxpy.CVXOPT, verbose=False):
     """
     Compute the modulus of the family of walks in a graph
     from a source node to a target node.
@@ -120,7 +120,7 @@ def modulus_walks_density(graph, source, target, p=2,
 
 
 def modulus_walks_density_inf(graph, source, target,
-                              eps=2e-36, solver=cvxpy.CVXOPT, verbose=0):
+                              eps=1e-8, solver=cvxpy.CVXOPT, verbose=0):
     # Warning: For high values of `p` the following error may obtain:
     # `ZeroDivisionError('Fraction(%s, 0)' % numerator)`
 
@@ -171,7 +171,7 @@ def modulus_walks_density_inf(graph, source, target,
 
 
 def modulus_walks_full(graph, source, target, p=2,
-                       eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+                       eps=1e-8, solver=cvxpy.CVXOPT, verbose=False):
     """
     1. Computes the modulus and extremal density using @Albin2014 Algorithm 1,
         collecting a minimal subfamily in the process.
