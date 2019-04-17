@@ -22,9 +22,9 @@ def spantree(graph, dens):
 
     """
     # Find a minimal spanning tree
-    st = g.spanning_tree(weights=dens, return_tree=False)
+    st = graph.spanning_tree(weights=dens, return_tree=False)
     # Create a zero array of length |E(G)|
-    z = numpy.zeros(g.ecount())
+    z = numpy.zeros(graph.ecount())
     # Indicate each edge visited
     for i in st:
         z[i] += 1
@@ -61,3 +61,46 @@ def modulus_spans_density(graph, p=2,
             print(p, "-modulus is approximately ", y ** exp)
             print("Theoretical error = ", eps)
     return([y ** p, rho])
+
+
+def modulus_spans_full(graph, p=2,
+                       eps=2e-36, solver=cvxpy.CVXOPT, verbose=False):
+    edge_count = graph.ecount()
+    x = cvxpy.Variable(edge_count)
+    obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
+    dens = numpy.zeros(edge_count)
+    z = spantree(graph=graph, dens=None)
+    Gamma = z
+    constraint_list = [x >= 0, 1 <= z * x]
+    while (numpy.dot(z, dens) ** p < 1 - eps):
+        prob = cvxpy.Problem(obj, constraint_list)
+        y = prob.solve(solver, verbose)
+        dens = x.value
+        if numpy.any(dens < 0):
+            dens = numpy.maximum(dens, numpy.zeros(dens.shape))
+        z = spantree(graph=graph, dens=dens)
+        Gamma = numpy.c_[Gamma, z]
+        constraint_list.append(1 <= z * x)
+    mod1 = y ** p
+    rho = numpy.asarray(dens)
+
+    n_objects = Gamma.shape[1]
+    lam = cvxpy.Variable(n_objects)
+    constraint_list = [lam >= 0]
+    obj = cvxpy.Maximize(
+        cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
+            cvxpy.power(
+                Gamma * lam / p,
+                p / (p - 1)
+            )
+        )
+    )
+    prob = cvxpy.Problem(obj, constraint_list)
+    mod2 = prob.solve(solver, verbose)
+    mu = numpy.asarray(lam.value / sum(lam.value))
+
+    diff = abs(mod1-mod2)
+    if diff > 1e-7:
+        print("Warning: The modulus estimates differ by more than 1e-7")
+
+    return([mod1, mod2, rho, mu, Gamma])

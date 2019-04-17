@@ -1,10 +1,9 @@
 """
-Testing file for function modulus walks
+Testing file for walk modulus
 Uses py.test
 To run testing unit, go to root of project and run on shell:
 py.test
 """
-
 
 from pmodpy import modwalks
 from pmodpy.examplegraphs import examplegraphs
