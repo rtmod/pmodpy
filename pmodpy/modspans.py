@@ -52,8 +52,8 @@ def modulus_spans_density(graph, p=2,
         dens = x.value
         if numpy.any(dens < 0):
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
-            z = spantree(graph=graph, dens=dens)
-            constraint_list.append(1 <= z * x)
+        z = spantree(graph=graph, dens=dens)
+        constraint_list.append(1 <= z * x)
     rho = numpy.asarray(dens)
     if verbose != 0:
         print("Edge", "Density")
