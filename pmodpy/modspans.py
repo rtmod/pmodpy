@@ -12,7 +12,8 @@ def spantree(graph, dens):
     Given a graph, return a *numpy* array of dimension |E(G)| indicating
     whether each edge is visited in a minimal spanning tree.
 
-    Uses http://igraph.org/python/ get_shortest_paths.
+    Uses `spanning_tree` from *python-igraph*:
+    http://igraph.org/python/
 
     Parameters:
     graph  -- *igraph* object
