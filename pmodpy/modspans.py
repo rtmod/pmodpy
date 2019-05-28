@@ -12,7 +12,8 @@ def spantree(graph, dens):
     Given a graph, return a *numpy* array of dimension |E(G)| indicating
     whether each edge is visited in a minimal spanning tree.
 
-    Uses http://igraph.org/python/ get_shortest_paths.
+    Uses `spanning_tree` from *python-igraph*:
+    http://igraph.org/python/
 
     Parameters:
     graph  -- *igraph* object
@@ -51,8 +52,8 @@ def modulus_spans_density(graph, p=2,
         dens = x.value
         if numpy.any(dens < 0):
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
-            z = spantree(graph=graph, dens=dens)
-            constraint_list.append(1 <= z * x)
+        z = spantree(graph=graph, dens=dens)
+        constraint_list.append(1 <= z * x)
     rho = numpy.asarray(dens)
     if verbose != 0:
         print("Edge", "Density")

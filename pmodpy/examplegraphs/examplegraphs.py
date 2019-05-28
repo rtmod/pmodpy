@@ -4,6 +4,8 @@
 Created on Sun Oct 15 14:54:41 2017
 
 @author: luissordovieira
+Paw graph from Albin:
+https://www.math.ksu.edu/~pietro/Conferences/2016SIAMCS/2016SIAMCS-Albin.pdf
 Kite, House, and Router graphs from Albin et al:
 https://arxiv.org/abs/1401.7640
 Contacts graph from Albin et al (2015) *Conf Geo Dyn*:
@@ -14,6 +16,12 @@ Notice that the indexing on vertices is shifted by -1.
 
 import igraph
 
+
+def Paw():
+    paw = igraph.Graph()
+    paw.add_vertices(4)
+    paw.add_edges([(0, 1), (1, 2), (1, 3), (2, 3)])
+    return paw
 
 def Kite():
     kite = igraph.Graph()

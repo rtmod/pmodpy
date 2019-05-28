@@ -12,7 +12,8 @@ def shortest(graph, source, target, dens=None):
     Given a graph, return a *numpy* array of dimension |E(G)| indicating
     whether each edge is visited in a shortest path from source to target.
 
-    Uses http://igraph.org/python/ get_shortest_paths.
+    Uses `get_shortest_paths` from *python-igraph*:
+    http://igraph.org/python/
 
     Parameters:
     graph  -- *igraph* object
@@ -24,12 +25,12 @@ def shortest(graph, source, target, dens=None):
 
     """
     # Find a shortest path
-    x = graph.get_shortest_paths(source, to=target, weights=dens,
-                                 mode="OUT", output="epath")
+    sp = graph.get_shortest_paths(source, to=target, weights=dens,
+                                  mode="OUT", output="epath")
     # Create a zero array of length |E(G)|
     z = numpy.zeros(graph.ecount())
     # Indicate each edge visited
-    for i in x:
+    for i in sp:
         z[i] += 1
     # Return as a *numpy* array
     return numpy.asarray(z)

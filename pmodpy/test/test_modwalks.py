@@ -13,7 +13,7 @@ def test_modulus_walks_density_kite_2():
     kite = examplegraphs.Kite()
     kite_mod = modwalks.modulus_walks_density(kite, 0, 1, p=2)
     assert kite_mod[0] - 0.6 < 1e-4
-    assert max(abs(kite_mod[1] - [i / 5 for i in [1, 2, 3, 1]])) < 1e-4
+    assert max(abs(kite_mod[1] - [i/5 for i in [1, 2, 3, 1]])) < 1e-4
 
 
 def test_modulus_walks_full_kite():
@@ -21,7 +21,7 @@ def test_modulus_walks_full_kite():
     kite_mod = modwalks.modulus_walks_full(kite, 0, 1, p=2)
     assert kite_mod[0] - 0.6 < 1e-4
     assert kite_mod[1] - 0.6 < 1e-4
-    assert max(abs(kite_mod[2] - [i / 5 for i in [1, 2, 3, 1]])) < 1e-4
+    assert max(abs(kite_mod[2] - [i/5 for i in [1, 2, 3, 1]])) < 1e-4
 
 
 def test_modulus_walks_density_house():
@@ -41,8 +41,8 @@ def test_modulus_walks_full_routers():
         0.445, 0.555
     ]
     routers_mod = modwalks.modulus_walks_full(routers, 0, 14, p=2,eps=1e-15)
-    assert abs(routers_mod[0] - mod_report) < 1e-3
-    assert abs(routers_mod[1] - mod_report) < 1e-3
+    assert abs(routers_mod[0] - mod_report) < 1e-6
+    assert abs(routers_mod[1] - mod_report) < 1e-6
     assert max(abs(routers_mod[2] / routers_mod[0] - rho_mod_report)) < 1e-3
 
 
