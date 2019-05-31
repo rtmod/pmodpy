@@ -4,24 +4,32 @@
 Created on Sun Oct 15 14:54:41 2017
 
 @author: luissordovieira
-Paw graph from Albin:
-https://www.math.ksu.edu/~pietro/Conferences/2016SIAMCS/2016SIAMCS-Albin.pdf
-Kite, House, and Router graphs from Albin et al:
-https://arxiv.org/abs/1401.7640
-Contacts graph from Albin et al (2015) *Conf Geo Dyn*:
-http://www.ams.org/journals/ecgd/2015-19-13/S1088-4173-2015-00287-8/
+
+`Kite`, `House`, and `Routers` graphs from:
+    Albin, Sahneh, Goering, Poggi-Corradini (2014)
+    "Modulus of families of walks on graphs"
+    https://arxiv.org/abs/1401.7640
+`Contacts` graph from:
+    Albin, Brunner, Perez, Poggi-Corradini, Wiens (2015)
+    "Modulus on graphs as a generalization of standard graph theoretic
+    quantities"
+    _Conformal Geometry and Dynamics_
+    http://www.ams.org/journals/ecgd/2015-19-13/S1088-4173-2015-00287-8/
+`Paw` graph from:
+    Albin (2016)
+    "Spanning Tree Modulus: Homogeneous Graphs and Deflation"
+    https://www.math.ksu.edu/~pietro/Conferences/2016SIAMCS/2016SIAMCS-Albin.pdf
+`Connecting_*` graphs from:
+    Shakeri, Poggi-Corradini, Scoglio, Albin (2016)
+    "Generalized network measures based on modulus of families of walks"
+    _Journal of Computational and Applied Mathematics_
+    https://www.sciencedirect.com/science/article/pii/S0377042716300061
+
 Notice that the indexing on vertices is shifted by -1.
 
 """
 
 import igraph
-
-
-def Paw():
-    paw = igraph.Graph()
-    paw.add_vertices(4)
-    paw.add_edges([(0, 1), (1, 2), (1, 3), (2, 3)])
-    return paw
 
 def Kite():
     kite = igraph.Graph()
@@ -29,25 +37,11 @@ def Kite():
     kite.add_edges([(0, 2), (0, 3), (1, 3), (2, 3)])
     return kite
 
-
 def House():
     house = igraph.Graph()
     house.add_vertices(5)
     house.add_edges([(0, 1), (0, 4), (4, 1), (0, 3), (3, 2), (2, 1)])
     return house
-
-
-def Contacts():
-    contacts = igraph.Graph()
-    contacts.add_vertices(21)
-    contacts.add_edges([
-        (0, 1), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3), (2, 5), (3, 5),
-        (5, 6), (6, 7), (7, 8), (8, 9), (3, 10),
-        (10, 11), (11, 12), (12, 13), (13, 14), (3, 15), (4, 15),
-        (15, 16), (16, 17), (17, 18), (18, 19), (9, 20), (14, 20), (19, 20)
-    ])
-    return contacts
-
 
 def Routers():
     routers = igraph.Graph()
@@ -61,61 +55,86 @@ def Routers():
     ])
     return routers
 
-def Shakeri_1a():
-    Shakeri_1a=igraph.Graph();
-    Shakeri_1a=Shakeri_1a.as_directed()
-    Shakeri_1a.add_vertices(9);
-    Shakeri_1a.add_edges([
+def Paw():
+    paw = igraph.Graph()
+    paw.add_vertices(4)
+    paw.add_edges([(0, 1), (1, 2), (1, 3), (2, 3)])
+    return paw
+
+def Contacts():
+    contacts = igraph.Graph()
+    contacts.add_vertices(21)
+    contacts.add_edges([
+        (0, 1), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3), (2, 5), (3, 5),
+        (5, 6), (6, 7), (7, 8), (8, 9), (3, 10),
+        (10, 11), (11, 12), (12, 13), (13, 14), (3, 15), (4, 15),
+        (15, 16), (16, 17), (17, 18), (18, 19), (9, 20), (14, 20), (19, 20)
+    ])
+    return contacts
+
+def Connecting_a():
+    Connecting_a=igraph.Graph();
+    Connecting_a=Connecting_a.as_directed()
+    Connecting_a.add_vertices(9);
+    Connecting_a.add_edges([
         (0,1),(1,2),(2,5),(3,1),(6,3),(8,6),(1,4),(4,7),(7,8),(5,8)
     ]);
-    return Shakeri_1a
+    return Connecting_a
 
-def Shakeri_1b():
-    Shakeri_1b=igraph.Graph();
-    Shakeri_1b=Shakeri_1b.as_directed()
-    Shakeri_1b.add_vertices(9);
-    Shakeri_1b.add_edges([
+def Connecting_b():
+    Connecting_b=igraph.Graph();
+    Connecting_b=Connecting_b.as_directed()
+    Connecting_b.add_vertices(9);
+    Connecting_b.add_edges([
         (0,1),(1,2),(2,5),(1,3),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)
     ]);
-    return Shakeri_1b
+    return Connecting_b
 
-def Shakeri_1c():
-    Shakeri_1c=igraph.Graph();
-    Shakeri_1c=Shakeri_1c.as_directed()
-    Shakeri_1c.add_vertices(9);
-    Shakeri_1c.add_edges([
+def Connecting_c():
+    Connecting_c=igraph.Graph();
+    Connecting_c=Connecting_c.as_directed()
+    Connecting_c.add_vertices(9);
+    Connecting_c.add_edges([
         (0,1),(1,2),(2,5),(1,3),(3,6),(3,6),(6,8),(1,4),(4,7),(7,8),(5,8)
     ]);
+    return Connecting_c
 
-
-    return Shakeri_1c
-
-def Shakeri_1d():
-    Shakeri_1d=igraph.Graph();
-    Shakeri_1d=Shakeri_1d.as_directed()
-    Shakeri_1d.add_vertices(9);
-    Shakeri_1d.add_edges([
+def Connecting_d():
+    Connecting_d=igraph.Graph();
+    Connecting_d=Connecting_d.as_directed()
+    Connecting_d.add_vertices(9);
+    Connecting_d.add_edges([
         (0,1),(1,2),(2,5),(1,3),(3,6),(3,6),(6,8),(1,4),
         (4,7),(7,8),(5,8),(3,2),(6,5),(3,4),(6,7)
     ]);
-    return Shakeri_1d
+    return Connecting_d
 
-# This reads an table of edges and creates a directed graph. If you want undirected,
-# choose directed False
+
+# This reads an table of edges and creates a directed graph.
+# If you want undirected, choose `directed=False`
 # Note that the vertices are still labeled by numbers
 # To get which label corresponds to which vertex,
-# use vs = igraph.VertexSeq(Dummy_Social_Network)
+# use `vs=igraph.VertexSeq(Dummy_Social_Network)`
+# ```py
 # for i in vs:
 #    print(i)
+# ```
 
-#igraph.read("smallgraph.edgelist", format="ncol", directed=False, names=True)
-#dummy_weighted = igraph.Graph.Read_Ncol("Graphs/dummy_weighted_2", directed=False)
+# ```py
+# igraph.read("smallgraph.edgelist", format="ncol", directed=False, names=True)
+# dummy_weighted = igraph.Graph.Read_Ncol("Graphs/dummy_weighted_2",
+#                                         directed=False)
+# ```
 
 # To use, in your console running the main script, incude
+# ```py
 # from ExampleGraphs import House
-# Now there is a graph House stored, and you can call the main(None,House,p,s,t,eps)
+# ```
+# Now a graph `House` is stored, and you can call `main(None,House,p,s,t,eps)`
 
+# ```py
 # import igraph.remote
 # import igraph.remote.nexus
-# UNABLE TO EXECUTE VARIANTS ON THIS STEP
+# # UNABLE TO EXECUTE VARIANTS ON THIS STEP
 # karate = igraph.remote.nexus.get("karate")
+# ```
