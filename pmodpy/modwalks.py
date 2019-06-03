@@ -176,3 +176,13 @@ def modulus_walks(graph, source, target, p=2,
         return([Mod, Mod_pmf, rho, mu, Gamma])
     else:
         return([Mod, Mod_pmf, rho, mu])
+
+def moduli_walks(graph, source, target, p=[1, 2, 'inf'],
+                 eps=1e-8, solver=cvxpy.CVXOPT):
+    return([
+        modulus_walks_density(
+            graph, source, target, p=q,
+            eps=eps, solver=solver
+        )[0]
+        for q in p
+    ])

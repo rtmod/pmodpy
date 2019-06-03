@@ -171,3 +171,10 @@ def modulus_spans(graph, p=2,
         return([Mod, Mod_pmf, rho, mu, Gamma])
     else:
         return([Mod, Mod_pmf, rho, mu])
+
+def moduli_spans(graph, p=[1, 2, 'inf'],
+                 eps=1e-8, solver=cvxpy.CVXOPT):
+    return([
+        modulus_spans_density(graph, p=q, eps=eps, solver=solver)[0]
+        for q in p
+    ])

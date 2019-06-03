@@ -59,3 +59,10 @@ def test_modulus_walks_density_connecting_d():
     connecting_d = examplegraphs.Connecting_d()
     connecting_d_mod = modwalks.modulus_walks_density(connecting_d, 0, 8, p=2)
     assert abs(connecting_d_mod[0] - 0.5169) < 1e-4
+
+from pmodpy import powers
+
+def test_moduli_walks_kite():
+    kite = examplegraphs.Kite()
+    p = powers.power_sequence(n = 5)
+    kite_mods = modwalks.moduli_walks(kite, 0, 1, p)
