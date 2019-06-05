@@ -15,10 +15,10 @@ Created on Sun Oct 15 14:54:41 2017
     quantities"
     _Conformal Geometry and Dynamics_
     http://www.ams.org/journals/ecgd/2015-19-13/S1088-4173-2015-00287-8/
-`Paw` graph from:
-    Albin (2016)
-    "Spanning Tree Modulus: Homogeneous Graphs and Deflation"
-    https://www.math.ksu.edu/~pietro/Conferences/2016SIAMCS/2016SIAMCS-Albin.pdf
+`Paw` and `Diamond` graphs from:
+    Albin, Kottegoda, Poggy-Corradini (2019)
+    "Spanning tree modulus for secure broadcast games"
+    https://arxiv.org/abs/1904.03962
 `Connecting_*` graphs from:
     Shakeri, Poggi-Corradini, Scoglio, Albin (2016)
     "Generalized network measures based on modulus of families of walks"
@@ -60,6 +60,12 @@ def Paw():
     paw.add_vertices(4)
     paw.add_edges([(0, 1), (1, 2), (1, 3), (2, 3)])
     return paw
+
+def Diamond():
+    diamond = igraph.Graph()
+    diamond.add_vertices(4)
+    diamond.add_edges([(0, 1), (1, 2), (2, 3), (0, 3), (1, 3)])
+    return diamond
 
 def Contacts():
     contacts = igraph.Graph()
