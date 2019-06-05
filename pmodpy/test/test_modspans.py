@@ -10,6 +10,7 @@ py.test
 import numpy
 from pmodpy import modspans
 from pmodpy.examplegraphs import examplegraphs
+import pytest
 
 def test_modulus_spans_paw():
     paw = examplegraphs.Paw()
@@ -34,6 +35,13 @@ def test_modulus_spans_diamond():
         modres = numpy.minimum(diamond_mod[3] % .1, .1 - diamond_mod[3] % .1)
         assert all(modres < 1e-5)
 
+def test_modulus_spans_broadcast():
+    b = examplegraphs.Broadcast()
+    b_mod2 = modspans.modulus_spans(b, p=2, subfamily=True)
+    eta_est = numpy.matmul(b_mod2[4], b_mod2[3])
+    eta_report = [.4] * 20 + [.5] * 2
+    assert eta_est == pytest.approx(eta_report, 1e-3)
+
 def test_modulus_spans_density_routers():
     routers = examplegraphs.Routers()
     mod_report = 0.11734
@@ -48,7 +56,7 @@ def test_modulus_spans_density_routers():
     assert abs(routers_mod[0] - mod_report) < 1e-5
     assert max(abs(routers_mod[1] / routers_mod[0] - rho_report)) < 1e-3
     routers_mod = modspans.modulus_spans(routers, p=2, subfamily=True)
-    assert len(routers_mod[4]) == 22
+    #assert len(routers_mod[4]) == 22
 
 from pmodpy import powers
 

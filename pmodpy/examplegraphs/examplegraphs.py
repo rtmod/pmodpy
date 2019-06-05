@@ -20,7 +20,7 @@ Created on Sun Oct 15 14:54:41 2017
     "Generalized network measures based on modulus of families of walks"
     _Journal of Computational and Applied Mathematics_
     https://www.sciencedirect.com/science/article/pii/S0377042716300061
-`Paw` and `Diamond` graphs from:
+`Paw`, `Diamond`, and `Broadcast` graphs from:
     Albin, Kottegoda, Poggy-Corradini (2019)
     "Spanning tree modulus for secure broadcast games"
     https://arxiv.org/abs/1904.03962
@@ -119,6 +119,11 @@ def Connecting_d():
     ]);
     return Connecting_d
 
+def Broadcast():
+    K5 = igraph.Graph.Full(5);
+    Broadcast = igraph.Graph.disjoint_union(K5, K5);
+    Broadcast.add_edges([(0, 5), (2, 7)]);
+    return Broadcast
 
 # This reads an table of edges and creates a directed graph.
 # If you want undirected, choose `directed=False`
