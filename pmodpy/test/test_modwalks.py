@@ -9,6 +9,20 @@ py.test
 
 from pmodpy import modwalks
 from pmodpy.examplegraphs import examplegraphs
+import pytest
+
+def test_modulus_walks_contacts():
+    g = examplegraphs.Contacts()
+    e = 1e-3
+    assert modwalks.modulus_walks(g, 0, 1, p=1)[0] == pytest.approx(1)
+    assert modwalks.modulus_walks(g, 1, 4, p=1)[0] == pytest.approx(3)
+    assert modwalks.modulus_walks(g, 4, 20, p=1)[0] == pytest.approx(3)
+    assert modwalks.modulus_walks(g, 0, 1, p=2)[0] == pytest.approx(1)
+    assert modwalks.modulus_walks(g, 1, 4, p=2)[0] == pytest.approx(1/.454, e)
+    assert modwalks.modulus_walks(g, 4, 20, p=2)[0] == pytest.approx(1/1.918, e)
+    assert modwalks.modulus_walks(g, 0, 1, p='inf')[0] == pytest.approx(1)
+    assert modwalks.modulus_walks(g, 1, 4, p='inf')[0] == pytest.approx(1)
+    assert modwalks.modulus_walks(g, 4, 20, p='inf')[0] == pytest.approx(1/6)
 
 def test_modulus_walks_kite():
     kite = examplegraphs.Kite()
@@ -16,8 +30,8 @@ def test_modulus_walks_kite():
     assert kite_mod[0] - 0.6 < 1e-4
     assert max(abs(kite_mod[1] - [i/5 for i in [1, 2, 3, 1]])) < 1e-4
     kite_mod = modwalks.modulus_walks(kite, 0, 1, p=2)
-    assert kite_mod[0] - 0.6 < 1e-4
-    assert kite_mod[1] - 0.6 < 1e-4
+    assert abs(kite_mod[0] - 0.6) < 1e-4
+    assert abs(kite_mod[1] - 0.6) < 1e-4
     assert max(abs(kite_mod[2] - [i/5 for i in [1, 2, 3, 1]])) < 1e-4
 
 def test_modulus_walks_density_house():

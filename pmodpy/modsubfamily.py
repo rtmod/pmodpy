@@ -166,21 +166,16 @@ def modulus_family(graph, family, p=2,
     # Estimate the modulus with the optimal probability mass function
     n_objects = Gamma.shape[1]
     lam = cvxpy.Variable(n_objects)
-    constraint_list = [lam >= 0]
     # Define the appropriate objective function
     if p == 1:
-        print("Warning: Optimal pmf modulus is not implemented for `p=1`.")
-        if subfamily:
-            return([Mod, float('nan'), rho, numpy.asarray(float('nan')), Gamma])
-        else:
-            return([Mod, float('nan'), rho, numpy.asarray(float('nan'))])
+        constraint_list = [Gamma * lam <= 1, lam >= 0]
+        obj = cvxpy.Maximize(cvxpy.sum(lam))
     elif p in [numpy.inf, 'inf', 'Inf']:
-        print("Warning: Optimal pmf modulus is not implemented for `p='inf'`.")
-        if subfamily:
-            return([Mod, float('nan'), rho, numpy.asarray(float('nan')), Gamma])
-        else:
-            return([Mod, float('nan'), rho, numpy.asarray(float('nan'))])
+        eta = cvxpy.Variable(Gamma.shape[0])
+        constraint_list = [Gamma * lam <= eta, cvxpy.sum(eta) == 1, lam >= 0]
+        obj = cvxpy.Maximize(cvxpy.sum(lam))
     else:
+        constraint_list = [lam >= 0]
         obj = cvxpy.Maximize(
             cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
                 cvxpy.power(

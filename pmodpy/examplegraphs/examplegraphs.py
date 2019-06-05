@@ -15,15 +15,15 @@ Created on Sun Oct 15 14:54:41 2017
     quantities"
     _Conformal Geometry and Dynamics_
     http://www.ams.org/journals/ecgd/2015-19-13/S1088-4173-2015-00287-8/
-`Paw` and `Diamond` graphs from:
-    Albin, Kottegoda, Poggy-Corradini (2019)
-    "Spanning tree modulus for secure broadcast games"
-    https://arxiv.org/abs/1904.03962
 `Connecting_*` graphs from:
     Shakeri, Poggi-Corradini, Scoglio, Albin (2016)
     "Generalized network measures based on modulus of families of walks"
     _Journal of Computational and Applied Mathematics_
     https://www.sciencedirect.com/science/article/pii/S0377042716300061
+`Paw` and `Diamond` graphs from:
+    Albin, Kottegoda, Poggy-Corradini (2019)
+    "Spanning tree modulus for secure broadcast games"
+    https://arxiv.org/abs/1904.03962
 
 Notice that the indexing on vertices is shifted by -1.
 
@@ -70,11 +70,15 @@ def Diamond():
 def Contacts():
     contacts = igraph.Graph()
     contacts.add_vertices(21)
+    # u = 0, s = 1, t = 4, v = 20
     contacts.add_edges([
-        (0, 1), (1, 2), (1, 3), (1, 4), (2, 3), (4, 3), (2, 5), (3, 5),
-        (5, 6), (6, 7), (7, 8), (8, 9), (3, 10),
-        (10, 11), (11, 12), (12, 13), (13, 14), (3, 15), (4, 15),
-        (15, 16), (16, 17), (17, 18), (18, 19), (9, 20), (14, 20), (19, 20)
+        (0, 1),
+        (1, 2), (1, 3), (1, 4), (2, 4), (3, 4),
+        (2, 5), (4, 5), (3, 7), (4, 7), (4, 6),
+        (5, 8), (8, 11), (11, 14), (14, 17),
+        (6, 9), (9, 12), (12, 15), (15, 18),
+        (7, 10), (10, 13), (13, 16), (16, 19),
+        (17, 20), (18, 20), (19, 20)
     ])
     return contacts
 
