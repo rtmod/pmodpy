@@ -157,8 +157,8 @@ def modulus_family(graph, family, p=2,
                    eps=2e-8, solver=cvxpy.CVXOPT, verbose=False):
     #
     # Compute the modulus, extremal density, and minimal subfamily
-    res = modulus_walks_density(graph, source, target, p=p, subfamily=True,
-                                eps=eps, solver=solver, verbose=verbose)
+    res = modulus_family_density(graph, family, p=p, subfamily=True,
+                                 eps=eps, solver=solver, verbose=verbose)
     Mod = res[0]
     rho = res[1]
     Gamma = res[2]
