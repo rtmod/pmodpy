@@ -16,6 +16,9 @@ conda install numpy
 conda install -c conda-forge python-igraph
 
 
+# why "(base) " appears before Terminal prompt
+# https://askubuntu.com/a/1026398
+
 
 # uninstall all this stuff
 conda remove python-igraph
