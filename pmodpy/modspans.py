@@ -65,7 +65,7 @@ def modulus_spans_density(graph, p=2,
     if subfamily:
         Gamma = numpy.empty((edge_count, 0))
     # Initialize the constraints for the optimization problem
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     #
     # Define the continuation criterion for the optimization loop
     if p in [numpy.inf, 'inf', 'Inf']:
@@ -91,7 +91,7 @@ def modulus_spans_density(graph, p=2,
         # Calculate a minimum span under the new extremal density estimate
         z = minimum_span_usage(graph, dens=dens)
         # Augment the constraints
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
     #
     # Note: Right now, we are getting a scaled density vector,
     # since we are multiplying \rho_i by w_i^(1/p),
@@ -137,14 +137,14 @@ def modulus_spans(graph, p=2,
         obj = cvxpy.Maximize(cvxpy.sum(lam))
     elif p in [numpy.inf, 'inf', 'Inf']:
         eta = cvxpy.Variable(Gamma.shape[0])
-        constraint_list = [Gamma * lam <= eta, cvxpy.sum(eta) == 1, lam >= 0]
+        constraint_list = [Gamma @ lam <= eta, cvxpy.sum(eta) == 1, lam >= 0]
         obj = cvxpy.Maximize(cvxpy.sum(lam))
     else:
         constraint_list = [lam >= 0]
         obj = cvxpy.Maximize(
             cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
                 cvxpy.power(
-                    Gamma * lam / p,
+                    Gamma @ lam / p,
                     p / (p - 1)
                 )
             )
