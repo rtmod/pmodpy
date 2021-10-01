@@ -78,7 +78,7 @@ def modulus_walks_density(graph, source, target, p=2,
     # Initialize the extremal density estimate
     dens = numpy.zeros(edge_count)
     # Initialize the constraints for the optimization problem
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     # Define the appropriate stopping criterion
     # if p == 'inf':x
     # def stop_criterion(internal_z, internal_dens):
@@ -100,7 +100,7 @@ def modulus_walks_density(graph, source, target, p=2,
         # Calculate the shortest path under the new extremal density estimate
         z = shortest(graph=graph, source=source, target=target, dens=dens)
         # Augment the constraints
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
 
     # Note: Right now, we are getting a scaled density vector,
     # since we are multiplying \rho_i by w_i^(1/p),
@@ -138,7 +138,7 @@ def modulus_walks_density_inf(graph, source, target,
     # Initialize the extremal density estimate
     dens = numpy.zeros(edge_count)
     # Initialize the constraints for the optimization problem
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     # While the extremal length estimate is not within the error tolerance of 1
     # Note: A relationship between the tolerance `eps` and the accuracy of `y`
     # has not been proved in the published literature.
@@ -156,7 +156,7 @@ def modulus_walks_density_inf(graph, source, target,
         # Calculate the shortest path under the new extremal density estimate
         z = shortest(graph=graph, source=source, target=target, dens=dens)
         # Augment the constraints
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
 
     # Store the final extremal density estimate
     rho = numpy.asarray(dens)
@@ -190,7 +190,7 @@ def modulus_walks_full(graph, source, target, p=2,
     dens = numpy.zeros(edge_count)
     z = shortest(graph=graph, source=source, target=target, dens=None)
     Gamma = z
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     while (numpy.dot(z, dens) ** p < 1 - eps):
         prob = cvxpy.Problem(obj, constraint_list)
         y = prob.solve(solver, verbose)
@@ -199,7 +199,7 @@ def modulus_walks_full(graph, source, target, p=2,
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
         z = shortest(graph=graph, source=source, target=target, dens=dens)
         Gamma = numpy.c_[Gamma, z]
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
     mod1 = y ** p
     rho = numpy.asarray(dens)
 
@@ -211,7 +211,7 @@ def modulus_walks_full(graph, source, target, p=2,
     obj = cvxpy.Maximize(
         cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
             cvxpy.power(
-                Gamma * lam / p,
+                Gamma @ lam / p,
                 p / (p - 1)
             )
         )

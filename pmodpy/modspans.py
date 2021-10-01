@@ -41,7 +41,7 @@ def modulus_spans_density(graph, p=2,
     obj = cvxpy.Minimize(cvxpy.pnorm(x, p))
     z = spantree(graph=graph, dens=None)
     dens = numpy.zeros(edge_count)
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     if p == 'inf':
         exp = 1
     else:
@@ -53,7 +53,7 @@ def modulus_spans_density(graph, p=2,
         if numpy.any(dens < 0):
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
         z = spantree(graph=graph, dens=dens)
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
     rho = numpy.asarray(dens)
     if verbose != 0:
         print("Edge", "Density")
@@ -72,7 +72,7 @@ def modulus_spans_full(graph, p=2,
     dens = numpy.zeros(edge_count)
     z = spantree(graph=graph, dens=None)
     Gamma = z
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     while (numpy.dot(z, dens) ** p < 1 - eps):
         prob = cvxpy.Problem(obj, constraint_list)
         y = prob.solve(solver, verbose)
@@ -81,7 +81,7 @@ def modulus_spans_full(graph, p=2,
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
         z = spantree(graph=graph, dens=dens)
         Gamma = numpy.c_[Gamma, z]
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
     mod1 = y ** p
     rho = numpy.asarray(dens)
 
@@ -91,7 +91,7 @@ def modulus_spans_full(graph, p=2,
     obj = cvxpy.Maximize(
         cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
             cvxpy.power(
-                Gamma * lam / p,
+                Gamma @ lam / p,
                 p / (p - 1)
             )
         )

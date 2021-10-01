@@ -74,7 +74,7 @@ def modulus_subfamily_density(graph, subfamily, p=2,
     # Initialize the extremal density estimate
     dens = numpy.zeros(edge_count)
     # Initialize the constraints for the optimization problem
-    constraint_list = [x >= 0, 1 <= z * x]
+    constraint_list = [x >= 0, 1 <= z @ x]
     # While the extremal length estimate is not within the error tolerance of 1
     while (numpy.dot(z, dens) ** p < 1 - eps):
         # Set up the optimization problem
@@ -89,7 +89,7 @@ def modulus_subfamily_density(graph, subfamily, p=2,
         # Calculate the minimum family member under the new density estimate
         z = get_minimum(graph, subfamily, dens)
         # Augment the constraints
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
     #
     # Store the final extremal density estimate
     rho = numpy.asarray(dens)
@@ -120,7 +120,7 @@ def modulus_subfamily_mass(graph, subfamily, p=2,
     obj = cvxpy.Maximize(
         cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
             cvxpy.power(
-                numpy.transpose(usage) * lam / p,
+                numpy.transpose(usage) @ lam / p,
                 p / (p - 1)
             )
         )
@@ -144,7 +144,7 @@ def modulus_subfamily_full(graph, subfamily, p=2,
     # find minimum configuration for uniform density
     z = get_minimum(graph, subfamily)
     Gamma = z
-    constraint_list.append(1 <= z * x)
+    constraint_list.append(1 <= z @ x)
     # iteratively append lengths of members of Gamma to constraints
     while (numpy.dot(z, dens) ** p < 1 - eps):
         # iteration of optimization process
@@ -156,7 +156,7 @@ def modulus_subfamily_full(graph, subfamily, p=2,
             dens = numpy.maximum(dens, numpy.zeros(dens.shape))
         z = get_minimum(graph, subfamily, dens)
         Gamma = numpy.c_[Gamma, z]
-        constraint_list.append(1 <= z * x)
+        constraint_list.append(1 <= z @ x)
     #
     # modulus and extremal density
     mod1 = y ** p
@@ -171,7 +171,7 @@ def modulus_subfamily_full(graph, subfamily, p=2,
     obj = cvxpy.Maximize(
         cvxpy.sum(lam) - (p - 1) * cvxpy.sum(
             cvxpy.power(
-                Gamma * lam / p,
+                Gamma @ lam / p,
                 p / (p - 1)
             )
         )
