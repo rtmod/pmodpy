@@ -1,0 +1,68 @@
+# Cory notes on Anaconda installations
+
+# https://www.anaconda.com/download/#macos
+# https://docs.anaconda.com/anaconda/install/verify-install
+conda list
+
+# http://www.cvxpy.org/en/latest/install/
+conda install -c cvxgrp cvxpy libgcc
+
+conda install nose
+nosetests cvxpy
+
+conda install numpy
+
+# https://anaconda.org/conda-forge/python-igraph
+conda install -c conda-forge python-igraph
+
+
+# why "(base) " appears before Terminal prompt
+# https://askubuntu.com/a/1026398
+
+
+# uninstall all this stuff
+conda remove python-igraph
+conda uninstall -c numpy scipy cvxgrp cvxpy libgcc
+
+
+
+# conda environment for Python 3
+# https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#removing-an-environment
+# http://salishsea-meopar-docs.readthedocs.io/en/latest/work_env/python3_conda_environment.html
+# using environment name py3
+
+conda create -n py3 python=3
+
+conda activate py3
+
+conda install anaconda
+
+conda install netcdf4
+
+# then install the previous packages
+
+conda deactivate
+
+
+
+
+# 2019-02-28
+# without Anaconda
+
+# manuall install Python 2.7.16
+pip install numpy
+pip install cvxpy
+pip install python-igraph
+# from directory outside `pmodpy`:
+pip install pmodpy/
+# from Bitbucket:
+pip3 install git+ssh://git@https://bitbucket.org/pmodulus/pmodpy.git
+
+brew install python3
+brew link python3
+pip3 install numpy
+pip3 install cvxpy
+# from directory outside `pmodpy`
+pip3 install pmodpy/
+# from Bitbucket:
+pip3 install git+ssh://git@https://bitbucket.org/pmodulus/pmodpy.git

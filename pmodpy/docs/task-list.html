@@ -1,0 +1,27 @@
+<h2 id="issues-and-tasks-for-implementations-of-the-p-modulus-on-graphs">Issues and tasks for implementations of the <span class="math inline"><em>p</em></span>-modulus on graphs</h2>
+<h3 id="python-implementation">Python implementation</h3>
+<p>Functionality:</p>
+<ul>
+<li>Characterize the step function from <code>eps</code> to accuracy</li>
+<li>Test case <span class="math inline"><em>p</em> = ∞</span> for relationship between tolerance <code>eps</code> and accuracy of <code>y</code></li>
+<li>Implement MFR algorithm. (Abandoned)</li>
+<li>Implement Probabilistic interpretation of Modulus. (Done)</li>
+<li>Replace walk- and tree-specific implementations with a general implementation that takes a minimum-object generator as an argument.</li>
+</ul>
+<p>Issues:</p>
+<p>Extensions:</p>
+<ul>
+<li>Weighted graphs</li>
+<li>Figure out how to get more examples through <code>igraph.remote.nexus</code> (remote nexus is not working, the link simply does not work)</li>
+<li>Get a signal transduction network example</li>
+<li>Implement graph-reading functions to facilitate use of new examples (Done 10/24/2017)</li>
+<li>Other families of links (e.g. <a href="http://igraph.org/python/doc/igraph.Graph-class.html">minimal spanning trees</a>)</li>
+<li>Validate on larger and denser graphs (e.g. Medicare)</li>
+</ul>
+<h3 id="r-implementation">R implementation</h3>
+<p>First get convex optimization working in R.</p>
+<p>R packages for convex optimization:</p>
+<ul>
+<li><a href="http://faculty.bscb.cornell.edu/~bien/cvxfromr.html">CVXfromR</a></li>
+<li><a href="https://github.com/anqif/cvxr">cvxr</a></li>
+</ul>
