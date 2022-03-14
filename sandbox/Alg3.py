@@ -12,7 +12,8 @@ def algorithm_3(graph, source, target):
     # initialization
     pointer = 0
     num = 1
-    tags = [0]  # tags is an array of integers, was 1 before, python starts counting from 0
+    # tags is an array of integers, was 1 before, python starts counting from 0
+    tags = [0]
     flag = False
 
     net = graph.get_adjlist(mode='in')
@@ -22,28 +23,35 @@ def algorithm_3(graph, source, target):
     while pointer <= num:
         flag = False
         c_MFR = all_MFRs[pointer]
-        c_tag = tags[pointer]  # current tag is integer
+        # current tag is integer
+        c_tag = tags[pointer]
         # while the current MFR is incomplete
         while not flag:
             c_node = c_MFR[c_tag][0]
-            c_preds = c_MFR[c_tag][1]  # c_preds is a list of integers
+            # c_preds is a list of integers
+            c_preds = c_MFR[c_tag][1]
 
             # if no predecessors remain
-            if not c_preds:  # python uses implicit booleans for lists
+            # python uses implicit booleans for lists
+            if not c_preds:
                 if c_tag == len(c_MFR) - 1:
                     flag = True
                 else:
                     c_tag = c_tag + 1
 
-            if True:  # placeholder, actually need to check that c_node is not composite through igraph
+            # placeholder;
+            # actually need to check that c_node is not composite through igraph
+            if True:
                 m = len(c_preds)
-                c_MFR[c_tag][1] = c_preds[0]  # BUG: for some reason when it gets to the empty set
-                # the program does not terminate and crashes when it gets to this line
+                # BUG: for some reason when it gets to the empty set
+                c_MFR[c_tag][1] = c_preds[0]
+                # the program does not terminate and crashes when it gets here
 
                 # allots memory to new partial MFRs
                 i = 0
                 while i < m - 1:
-                    temp1 = copy.deepcopy(c_MFR)  # Python doesn't reassign the actual list otherwise
+                    # Python doesn't reassign the actual list otherwise
+                    temp1 = copy.deepcopy(c_MFR)
                     # deepcopy is very memory-intensive
                     temp1[c_tag][1] = c_preds[i + 1]
                     # current MFR is replaced by first copy
@@ -53,11 +61,14 @@ def algorithm_3(graph, source, target):
                 num = num + m - 1
             c_preds = [c_MFR[c_tag][1]]
 
-            stems = [mfr[0] for mfr in c_MFR]  # returns list of entries in MFR's first "column"
+            # returns list of entries in MFR's first "column"
+            stems = [mfr[0] for mfr in c_MFR]
 
             # appends new rows to current partial MFR
-            if not set(c_preds).difference(set(stems)):  # checks that all c_preds are in c_MFR
-                if c_tag == len(c_MFR) - 1:  # same as line 35
+            # checks that all c_preds are in c_MFR
+            if not set(c_preds).difference(set(stems)):
+                # same as line 35
+                if c_tag == len(c_MFR) - 1:
                     flag = True
                 else:
                     c_tag = c_tag + 1
