@@ -1,29 +1,42 @@
 import copy
 
 from igraph import *
+from igraph_graph import *
 
 def algorithm_3(graph, source, target):
 
+    print("Initializing")
+    print('*' * 124)
     # initialization
     pointer = 0
     num = 1
     # tags is an array of integers, python starts counting from 0
     tags = [0]
     flag = False
+    cycles = []
+
 
     net = graph.get_adjlist(mode='in')
     all_MFRs = [[[target, net[target]]]]
+    print(graph)
+    print('*' * 124)
 
     # while some partial MFRs remain
     while pointer < num:
+        print("pointer:", pointer)
+        print("Number of partial MFRs:", num)
         flag = False
         c_MFR = all_MFRs[pointer]
+        # print("current MFR:", c_MFR)
         c_tag = tags[pointer]
+        print("current tag:", c_tag)
         # while the current MFR is incomplete
         while not flag:
             c_node = c_MFR[c_tag][0]
+            print("current node:", c_node)
             # c_preds is a list of integers
             c_preds = c_MFR[c_tag][1]
+            print("predecessors:", c_preds)
 
             # if no predecessors remain
             # python uses implicit booleans for lists
@@ -34,7 +47,8 @@ def algorithm_3(graph, source, target):
                     c_tag = c_tag + 1
 
             else:
-                if True:
+                # if True:
+                if not c_node in graph.composite_nodes:
                 # placeholder;
                 # actually need to check that c_node is not a composite node
                     m = len(c_preds)
@@ -52,16 +66,23 @@ def algorithm_3(graph, source, target):
                         tags.append(c_tag)
                         i = i + 1
                     num = num + m - 1
-                c_preds = [c_MFR[c_tag][1]]
+                    c_preds = [c_MFR[c_tag][1]]
+                    print("***new partial MFRs created***")
+                    print("Number of partial MFRs:", num)
+                else:
+                    print("\ncurrent node is a composite node\n")
 
                 # returns list of entries in MFR's first "column"
-                stems = [mfr[0] for mfr in c_MFR]
+                stems = [row[0] for row in c_MFR]
+                print("stems:", stems)
 
                 # checks that all c_preds are in c_MFR
                 if not set(c_preds).difference(set(stems)):
                     # same as line 35
+                    print("all predecessors are in the current MFR")
                     if c_tag == len(c_MFR) - 1:
                         flag = True
+                        print("flag drops")
                     else:
                         c_tag = c_tag + 1
                 # appends new rows to current partial MFR
@@ -69,18 +90,46 @@ def algorithm_3(graph, source, target):
                     for v in c_preds:
                         temp2 = net[v]
                         c_MFR.append([v, temp2])
-
-                c_tag = c_tag + 1
+                    print("***new stems appended to MFR***")
+                    c_tag = c_tag + 1
 
         pointer = pointer + 1
 
-    # removes "extra" MFRs, those that result from cycles in graph
-    # BUG: it removes all but one extra MFR
-    for mfr in all_MFRs:
-        if not mfr[len(mfr)-1][0] == 0:
-            all_MFRs.remove(mfr)
+        stalks = [row[1] for row in c_MFR]
+        print("stalks:", stalks)
+        if not [] in stalks:
+            print("cycle deteceted!")
+            cycles.append(c_MFR)
 
-    print("Final MFRs:")
+        print("Completed MFR:", c_MFR)
+        print("Cycles:")
+        for cycle in cycles:
+            print(cycle)
+        print("Number of cycles:", len(cycles))
+        print('*' * 124)
+    print("all MFRs:")
     for mfr in all_MFRs:
         print(mfr)
-    print("Number of MFRs:", len(all_MFRs))
+
+    print('*' * 124)
+    print("Final MFRs:")
+    print('*' * 124)
+
+    # removes "extra" MFRs, those that result from cycles in graph
+    final_MFRs = []
+    for mfr in all_MFRs:
+        if not mfr in cycles:
+            final_MFRs.append(mfr)
+
+    for mfr in final_MFRs:
+        print(mfr)
+
+    print('*' * 124)
+    print("Number of MFRs:", len(final_MFRs))
+    print('*' * 124)
+
+
+# algorithm_3(dag, 0, 9)
+# algorithm_3(dcg, 0, 7)
+algorithm_3(exp_dag, 0, 9)
+# algorithm_3(exp_dcg, 0, 7)
