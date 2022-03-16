@@ -2,7 +2,7 @@ import copy
 from igraph import *
 from igraph_graph import *
 
-def algorithm_3(graph, source, target):
+def algorithm_3(graph, source, target, verbose = False):
 
     # initialization
     pointer = 0
@@ -89,9 +89,10 @@ def algorithm_3(graph, source, target):
             final_MFRs.append(mfr)
 
     # output
-    print("Final MFRs:")
-    for mfr in final_MFRs:
-        print(mfr)
-    print("Number of MFRs:", len(final_MFRs))
+    if verbose:
+        print("Final MFRs:")
+        for mfr in final_MFRs:
+            print(mfr)
+        print("Number of MFRs:", len(final_MFRs))
 
-algorithm_3(dcg, 0, 7)
+    return([final_MFRs, len(final_MFRs)])
