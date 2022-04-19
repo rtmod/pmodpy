@@ -10,7 +10,7 @@ setup(
     url='',
     license='LICENSE.txt',
     description='Computations of the p-modulus',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     packages=setuptools.find_packages(),
     install_requires=[
         "python-igraph",
